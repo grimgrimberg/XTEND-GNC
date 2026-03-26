@@ -1,0 +1,272 @@
+{
+  "source_csv": "/mnt/c/Users/yuval/XTEND-GNC/examGuidance.csv",
+  "output_dir": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q1",
+  "selected_convention": {
+    "quaternion_is_body_to_world": false,
+    "camera_positive_azimuth_right": true,
+    "camera_positive_elevation_up": false,
+    "gimbal_positive_pitch_raises": false
+  },
+  "auto_selected_convention": {
+    "quaternion_is_body_to_world": false,
+    "camera_positive_azimuth_right": true,
+    "camera_positive_elevation_up": false,
+    "gimbal_positive_pitch_raises": false
+  },
+  "convention_selection_note": "Frame/sign conventions are inferred under the stated camera-body alignment model. The ranking is diagnostic evidence, not direct ground truth.",
+  "sensor_sync": {
+    "target_samples": 1405,
+    "duration_s": 28.078248023986816,
+    "gimbal_offset_ms_median": 4.416942596435547,
+    "gimbal_offset_ms_p95": 10.226058959960938,
+    "attitude_offset_ms_median": 4.33802604675293,
+    "attitude_offset_ms_p95": 8.672475814819336
+  },
+  "stream_summary": [
+    {
+      "stream": "camera",
+      "samples": 1405,
+      "median_dt_s": 0.019972562789916992,
+      "nominal_rate_hz": 50.00311981006024,
+      "p95_dt_s": 0.02245233058929443
+    },
+    {
+      "stream": "gimbal",
+      "samples": 1675,
+      "median_dt_s": 0.016646981239318848,
+      "nominal_rate_hz": 59.6224933449253,
+      "p95_dt_s": 0.02555443048477173
+    },
+    {
+      "stream": "nav",
+      "samples": 1673,
+      "median_dt_s": 0.016635537147521973,
+      "nominal_rate_hz": 59.556857806958575,
+      "p95_dt_s": 0.024240589141845702
+    },
+    {
+      "stream": "empty_rows",
+      "samples": 1826,
+      "median_dt_s": 0.013995885848999023,
+      "nominal_rate_hz": 65.04023802472413,
+      "p95_dt_s": 0.035357761383056636
+    },
+    {
+      "stream": "unclassified_rows",
+      "samples": 0,
+      "median_dt_s": NaN,
+      "nominal_rate_hz": NaN,
+      "p95_dt_s": NaN
+    }
+  ],
+  "world_angle_ranges_deg": {
+    "azimuth_min": -178.23682939265922,
+    "azimuth_max": -140.70921581769994,
+    "elevation_min": -45.692850351497235,
+    "elevation_max": -13.677585791097721
+  },
+  "selected_rate_method": "local_polynomial",
+  "rate_selection": {
+    "policy": "Rank by weighted normalized composite score with lower-is-better metrics: lag_abs_mean_s=0.35, reconstruction_rmse_mean_deg=0.30, noise_proxy_mean_deg_per_s=0.20, edge_proxy_mean_deg_per_s=0.10, holdout_rmse_mean_deg=0.05. Break ties by lag, reconstruction RMSE, noise proxy, edge proxy, then holdout RMSE.",
+    "weights": {
+      "lag_abs_mean_s": 0.35,
+      "reconstruction_rmse_mean_deg": 0.3,
+      "noise_proxy_mean_deg_per_s": 0.2,
+      "edge_proxy_mean_deg_per_s": 0.1,
+      "holdout_rmse_mean_deg": 0.05
+    },
+    "selected_method": "local_polynomial",
+    "ranking": [
+      {
+        "method": "local_polynomial",
+        "lag_abs_mean_s": 0.0,
+        "reconstruction_rmse_mean_deg": 0.2516167615909324,
+        "noise_proxy_mean_deg_per_s": 5.811956707282198,
+        "edge_proxy_mean_deg_per_s": 111.27387171209828,
+        "holdout_rmse_mean_deg": 0.13022479282068455,
+        "lag_abs_mean_s_normalized": 0.0,
+        "lag_abs_mean_s_weighted_score": 0.0,
+        "reconstruction_rmse_mean_deg_normalized": 0.0,
+        "reconstruction_rmse_mean_deg_weighted_score": 0.0,
+        "noise_proxy_mean_deg_per_s_normalized": 0.3195902663460732,
+        "noise_proxy_mean_deg_per_s_weighted_score": 0.06391805326921464,
+        "edge_proxy_mean_deg_per_s_normalized": 0.4694465454393266,
+        "edge_proxy_mean_deg_per_s_weighted_score": 0.046944654543932665,
+        "holdout_rmse_mean_deg_normalized": 0.0,
+        "holdout_rmse_mean_deg_weighted_score": 0.0,
+        "composite_score": 0.1108627078131473
+      },
+      {
+        "method": "spline",
+        "lag_abs_mean_s": 0.0,
+        "reconstruction_rmse_mean_deg": 0.25420349966544553,
+        "noise_proxy_mean_deg_per_s": 13.767414913022002,
+        "edge_proxy_mean_deg_per_s": 154.49296990940965,
+        "holdout_rmse_mean_deg": 0.13022479282068455,
+        "lag_abs_mean_s_normalized": 0.0,
+        "lag_abs_mean_s_weighted_score": 0.0,
+        "reconstruction_rmse_mean_deg_normalized": 0.006092219732447007,
+        "reconstruction_rmse_mean_deg_weighted_score": 0.001827665919734102,
+        "noise_proxy_mean_deg_per_s_normalized": 1.0,
+        "noise_proxy_mean_deg_per_s_weighted_score": 0.2,
+        "edge_proxy_mean_deg_per_s_normalized": 1.0,
+        "edge_proxy_mean_deg_per_s_weighted_score": 0.1,
+        "holdout_rmse_mean_deg_normalized": 0.0,
+        "holdout_rmse_mean_deg_weighted_score": 0.0,
+        "composite_score": 0.3018276659197341
+      },
+      {
+        "method": "savgol",
+        "lag_abs_mean_s": 0.009986281394958496,
+        "reconstruction_rmse_mean_deg": 0.3843031605020115,
+        "noise_proxy_mean_deg_per_s": 2.075256773223628,
+        "edge_proxy_mean_deg_per_s": 73.03256695510396,
+        "holdout_rmse_mean_deg": 0.13022479282068455,
+        "lag_abs_mean_s_normalized": 1.0,
+        "lag_abs_mean_s_weighted_score": 0.35,
+        "reconstruction_rmse_mean_deg_normalized": 0.3124996325055259,
+        "reconstruction_rmse_mean_deg_weighted_score": 0.09374988975165778,
+        "noise_proxy_mean_deg_per_s_normalized": 0.0,
+        "noise_proxy_mean_deg_per_s_weighted_score": 0.0,
+        "edge_proxy_mean_deg_per_s_normalized": 0.0,
+        "edge_proxy_mean_deg_per_s_weighted_score": 0.0,
+        "holdout_rmse_mean_deg_normalized": 0.0,
+        "holdout_rmse_mean_deg_weighted_score": 0.0,
+        "composite_score": 0.44374988975165774
+      },
+      {
+        "method": "gradient",
+        "lag_abs_mean_s": 0.0,
+        "reconstruction_rmse_mean_deg": 0.6762137374249211,
+        "noise_proxy_mean_deg_per_s": 11.444590854625094,
+        "edge_proxy_mean_deg_per_s": 143.23490357825528,
+        "holdout_rmse_mean_deg": 0.13022479282068455,
+        "lag_abs_mean_s_normalized": 0.0,
+        "lag_abs_mean_s_weighted_score": 0.0,
+        "reconstruction_rmse_mean_deg_normalized": 1.0,
+        "reconstruction_rmse_mean_deg_weighted_score": 0.3,
+        "noise_proxy_mean_deg_per_s_normalized": 0.8013348749970838,
+        "noise_proxy_mean_deg_per_s_weighted_score": 0.16026697499941678,
+        "edge_proxy_mean_deg_per_s_normalized": 0.8617970704432992,
+        "edge_proxy_mean_deg_per_s_weighted_score": 0.08617970704432992,
+        "holdout_rmse_mean_deg_normalized": 0.0,
+        "holdout_rmse_mean_deg_weighted_score": 0.0,
+        "composite_score": 0.5464466820437467
+      }
+    ]
+  },
+  "rate_summary_deg_s": {
+    "azimuth_std": 15.28580482492331,
+    "elevation_std": 14.167249986236586,
+    "azimuth_peak_abs": 156.06515517853924,
+    "elevation_peak_abs": 152.92378218809625
+  },
+  "rate_metrics": [
+    {
+      "channel": "azimuth",
+      "method": "gradient",
+      "noise_proxy_deg_per_s": 10.625617939968489,
+      "edge_proxy_deg_per_s": 187.8893814717535,
+      "lag_proxy_seconds": 0.0,
+      "reconstruction_rmse_deg": 0.3551733411672634,
+      "holdout_rmse_deg": 0.07410589245755318
+    },
+    {
+      "channel": "azimuth",
+      "method": "savgol",
+      "noise_proxy_deg_per_s": 1.8336509224149877,
+      "edge_proxy_deg_per_s": 87.08367184855652,
+      "lag_proxy_seconds": 0.019972562789916992,
+      "reconstruction_rmse_deg": 0.31941842787644403,
+      "holdout_rmse_deg": 0.07410589245755318
+    },
+    {
+      "channel": "azimuth",
+      "method": "local_polynomial",
+      "noise_proxy_deg_per_s": 5.783911501671842,
+      "edge_proxy_deg_per_s": 156.06515517853924,
+      "lag_proxy_seconds": 0.0,
+      "reconstruction_rmse_deg": 0.24076165939472433,
+      "holdout_rmse_deg": 0.07410589245755318
+    },
+    {
+      "channel": "azimuth",
+      "method": "spline",
+      "noise_proxy_deg_per_s": 13.924953785395981,
+      "edge_proxy_deg_per_s": 222.9569176886124,
+      "lag_proxy_seconds": 0.0,
+      "reconstruction_rmse_deg": 0.24181564116669493,
+      "holdout_rmse_deg": 0.07410589245755318
+    },
+    {
+      "channel": "elevation",
+      "method": "gradient",
+      "noise_proxy_deg_per_s": 12.263563769281697,
+      "edge_proxy_deg_per_s": 98.58042568475707,
+      "lag_proxy_seconds": 0.0,
+      "reconstruction_rmse_deg": 0.9972541336825789,
+      "holdout_rmse_deg": 0.1863436931838159
+    },
+    {
+      "channel": "elevation",
+      "method": "savgol",
+      "noise_proxy_deg_per_s": 2.316862624032268,
+      "edge_proxy_deg_per_s": 58.98146206165139,
+      "lag_proxy_seconds": 0.0,
+      "reconstruction_rmse_deg": 0.44918789312757906,
+      "holdout_rmse_deg": 0.1863436931838159
+    },
+    {
+      "channel": "elevation",
+      "method": "local_polynomial",
+      "noise_proxy_deg_per_s": 5.8400019128925535,
+      "edge_proxy_deg_per_s": 66.48258824565733,
+      "lag_proxy_seconds": 0.0,
+      "reconstruction_rmse_deg": 0.2624718637871404,
+      "holdout_rmse_deg": 0.1863436931838159
+    },
+    {
+      "channel": "elevation",
+      "method": "spline",
+      "noise_proxy_deg_per_s": 13.60987604064802,
+      "edge_proxy_deg_per_s": 86.02902213020691,
+      "lag_proxy_seconds": 0.0,
+      "reconstruction_rmse_deg": 0.2665913581641961,
+      "holdout_rmse_deg": 0.1863436931838159
+    }
+  ],
+  "best_candidate_by_composite_score": {
+    "quaternion_is_body_to_world": false,
+    "camera_positive_azimuth_right": true,
+    "camera_positive_elevation_up": false,
+    "gimbal_positive_pitch_raises": false,
+    "pair_miss_median_m": 0.041134827963281745,
+    "pair_miss_p90_m": 0.10795971811925142,
+    "bundle_positive_ratio": 1.0,
+    "bundle_count": 115,
+    "combined_rate_std_deg_s": 29.453054811159895,
+    "heading_error_median_deg": 4.131528241170308
+  },
+  "bundle_geometry": {
+    "bundle_count": 158,
+    "bundle_residual_median_m": 0.041263265177098024,
+    "bundle_residual_p90_m": 0.11447859214262643
+  },
+  "artifact_paths": [
+    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q1/q1_world_angles.csv",
+    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q1/q1_convention_candidates.csv",
+    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q1/q1_bundle_points.csv",
+    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q1/q1_ground_footprint.csv",
+    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q1/q1_sync_diagnostics.png",
+    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q1/q1_frame_diagnostics.png",
+    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q1/q1_sync_quality.png",
+    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q1/q1_world_angles.png",
+    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q1/q1_rate_estimates.png",
+    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q1/q1_rate_raw_vs_clean.png",
+    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q1/q1_camera_fov.png",
+    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q1/q1_bundle_residuals.png",
+    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q1/q1_geometry_topdown.png",
+    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q1/q1_geometry_3d.png",
+    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q1/q1_geometry_animation.gif"
+  ]
+}

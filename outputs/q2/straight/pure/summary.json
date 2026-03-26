@@ -1,0 +1,43 @@
+{
+  "target_mode": "straight",
+  "guidance_mode": "pure",
+  "bundle_dir": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pure",
+  "scenario": {
+    "target_initial_position_m": [
+      800.0,
+      200.0,
+      300.0
+    ],
+    "interceptor_initial_position_m": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "interceptor_initial_velocity_mps": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "target_speed_mps": 13.0,
+    "target_heading_rad": null,
+    "target_vertical_speed_mps": null,
+    "intercept_radius_m": 2.0,
+    "dt_s": 0.05,
+    "horizon_s": 180.0
+  },
+  "metrics": {
+    "intercepted": true,
+    "intercept_time_s": 134.5,
+    "minimum_distance_m": 1.6630778190283209,
+    "max_speed_mps": 19.99999999993316,
+    "max_abs_accel_x_mps2": 2.5,
+    "max_abs_accel_y_mps2": 1.0,
+    "peak_los_rate_radps": 0.004603613766306847
+  },
+  "artifact_paths": [
+    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pure/trajectory.png",
+    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pure/constraints.png",
+    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pure/engagement.png",
+    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pure/animation.gif"
+  ]
+}

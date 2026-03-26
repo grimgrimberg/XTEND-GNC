@@ -1,0 +1,13 @@
+target_mode,guidance_mode,intercepted,intercept_time_s,minimum_distance_m,max_speed_mps,max_abs_accel_x_mps2,max_abs_accel_y_mps2
+straight,predictive,True,134.4,1.9970563387212914,20.0,2.5,1.0
+straight,pure,True,134.5,1.6630778190283209,19.99999999993316,2.5,1.0
+straight,pn,True,134.45000000000002,1.6560666515885696,20.0,2.5,1.0
+weave,predictive,True,133.4,1.6690136928064696,20.000000000000004,2.5,1.0
+weave,pure,True,129.35,1.9765389702588827,20.0,2.5,1.0
+weave,pn,True,133.55,1.612786286753355,20.000000000000004,2.5,1.0
+bounded_turn,predictive,True,133.3,1.984458024080998,20.0,2.5,1.0
+bounded_turn,pure,True,149.4,1.680704432432922,20.0,2.5,1.0
+bounded_turn,pn,True,143.9,1.5049419234708186,20.0,2.5,1.0
+reactive,predictive,True,154.70000000000002,1.6381361221408717,20.0,2.5,1.0
+reactive,pure,False,,11.90628960160429,20.000000000000004,2.5,1.0
+reactive,pn,False,,2.2705019507393884,20.0,2.5,1.0
