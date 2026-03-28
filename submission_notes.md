@@ -3,6 +3,7 @@
 ## Short Summary
 
 - Q1 is implemented as asynchronous sensor fusion rather than row-wise CSV arithmetic.
+- Q1 now includes a causal `kalman_cv` constant-velocity candidate alongside the other rate estimators.
 - Q2 preserves the assignment baseline and adds a labeled 12-bundle comparison matrix for reviewer visibility.
 - The markdown surface is intentionally small: `README.md` and this file are the only submission-facing narratives.
 
@@ -18,6 +19,8 @@
   - `savgol`
   - `local_polynomial`
   - `spline`
+- Add the causal `kalman_cv` candidate with `[theta, theta_dot]` state tracking for azimuth and elevation.
+- The Kalman tuning defaults are derived from causal-prefix signal statistics, then written to `q1_summary.json` so the resolved values remain reviewable.
 - Select the reported rate method with a weighted normalized score that is explicitly dominated by the two quantities named in the prompt:
   - mean absolute lag, weight `0.40`
   - mean noise proxy, weight `0.40`
@@ -25,6 +28,7 @@
   - mean edge proxy, weight `0.05`
   - mean holdout RMSE, weight `0.05`
 - This keeps the decision anchored to low latency and low noise, while still rejecting methods that look smooth only because they distort the underlying angle history.
+- The selector still compares `kalman_cv` against the other candidates; it is not silently forced as the answer.
 
 ## Q1 Bugs Fixed During Review
 
@@ -33,6 +37,8 @@
 - The previous summary claimed the selected rate method came from quantitative comparison, but the code hardcoded `local_polynomial`.
 - The previous rate-selector narrative was more generic than the assignment requires. The current selector is framed directly around the prompt's noise-and-latency trade, with reconstruction / edge / holdout metrics acting only as secondary guardrails.
 - The previous write-up spoke too confidently about the “true” convention selection. The current repo treats it as diagnostic evidence under an explicit camera/body model, not as direct truth.
+
+- The previous Q1 write-up did not mention the Kalman CV candidate or its tracking plot. The current repo documents both so reviewers can inspect the causal state estimate without assuming it won the ranking.
 
 ## Q2 Method
 
@@ -100,10 +106,10 @@ python3 Q1.py
 python3 Q2.py
 ```
 
-Observed on `2026-03-28`:
+Observed on `2026-03-29`:
 
-- `python -m pytest -q` -> `48 passed in 443.11s`
-- `python Q1.py --skip-animation --output-dir outputs/q1_verification` -> completed cleanly and regenerated the full static Q1 artifact set
+- `python -m pytest -q` -> `53 passed in 592.96s`
+- `python Q1.py --skip-animation --output-dir outputs/q1_verification_kalman` -> completed cleanly and regenerated the current static Q1 artifact set
 - `python Q2.py --skip-animation --output-dir outputs/q2_verification_final` -> completed cleanly and regenerated:
   - `outputs/q2_verification_final/q2_summary.json`
   - `outputs/q2_verification_final/q2_overview_matrix.png`
@@ -117,9 +123,9 @@ Current headline runtime results:
   - camera elevation positive down
   - gimbal positive pitch down
 - Q1 selected rate method:
-  - `local_polynomial`
+  - `savgol`
 - Q1 note on `savgol`:
-  - visually smoother, but it carries slightly higher lag on this log; `local_polynomial` keeps the lag proxy at zero while remaining materially cleaner than raw gradient differentiation
+  - visually smoother, and on this run it also won the selector while keeping the lag/noise trade acceptable relative to the other candidates
 - Q2 baseline predictive result:
   - intercepted = `True`
   - intercept time = `129.5 s`

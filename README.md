@@ -2,7 +2,7 @@
 
 This repository contains a submission-ready answer to the two tasks in `1000191377.pdf`.
 
-- `Q1.py` reconstructs world-frame target azimuth/elevation from the asynchronous guidance log, estimates azimuth/elevation rates, and emits reviewer-facing diagnostics.
+- `Q1.py` reconstructs world-frame target azimuth/elevation from the asynchronous guidance log, estimates azimuth/elevation rates, compares a causal `kalman_cv` constant-velocity candidate against the other rate estimators, and emits reviewer-facing diagnostics.
 - `Q2.py` simulates the constrained 3D intercept baseline from the prompt and also generates a labeled 12-bundle extension matrix (`4 target modes x 3 guidance laws`) for comparison.
 
 ## Quick Start
@@ -58,6 +58,7 @@ python3 Q2.py --skip-animation
 - Camera timestamps are the master timeline because LOS exists only on camera samples.
 - The camera/body alignment model is explicit, but the quaternion direction and sign conventions are still inferred from data-driven diagnostics rather than observed directly.
 - The reported rate method is chosen with a noise/latency-first policy; reconstruction and edge metrics are secondary guards against a numerically pretty but untrustworthy derivative.
+- The `kalman_cv` candidate is causal, uses a `[theta, theta_dot]` state for each channel, and is compared by the selector rather than silently forced into the final answer.
 - Q1 geometry plots are plausibility diagnostics only. The dataset does not contain target range truth.
 
 ### Q2
@@ -85,6 +86,7 @@ python3 Q2.py --skip-animation
 - `q1_world_angles.png`
 - `q1_rate_estimates.png`
 - `q1_rate_raw_vs_clean.png`
+- `q1_kalman_tracking.png`
 - `q1_camera_fov.png`
 - `q1_bundle_residuals.png`
 - `q1_geometry_topdown.png`
@@ -146,8 +148,8 @@ python3 Q1.py
 python3 Q2.py
 ```
 
-Fresh verification from the repo root on `2026-03-28`:
+Fresh verification from the repo root on `2026-03-29`:
 
-- `python -m pytest -q` -> `48 passed in 443.11s`
-- `python Q1.py --skip-animation --output-dir outputs/q1_verification` -> regenerated a clean static Q1 artifact set and `outputs/q1_verification/q1_summary.json`
+- `python -m pytest -q` -> `53 passed in 592.96s`
+- `python Q1.py --skip-animation --output-dir outputs/q1_verification_kalman` -> completed cleanly and regenerated `outputs/q1_verification_kalman/q1_summary.json` with the current static Q1 artifact set
 - `python Q2.py --skip-animation --output-dir outputs/q2_verification_final` -> regenerated `outputs/q2_verification_final/q2_summary.json`, `outputs/q2_verification_final/q2_overview_matrix.png`, and all `12` scenario bundles
