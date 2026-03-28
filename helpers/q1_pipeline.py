@@ -684,6 +684,8 @@ def run_q1_analysis(
     time_s = synchronized["time_s"].to_numpy()
     world_az_deg = synchronized["world_az_deg"].to_numpy()
     world_el_deg = synchronized["world_el_deg"].to_numpy()
+    kalman_azimuth = kalman_cv(time_s, world_az_deg, unwrap=True)
+    kalman_elevation = kalman_cv(time_s, world_el_deg)
     rate_candidates = {
         "gradient": {
             "azimuth": estimate_angle_rate(time_s, world_az_deg, method="gradient", unwrap=True),
@@ -701,6 +703,10 @@ def run_q1_analysis(
             "azimuth": estimate_angle_rate(time_s, world_az_deg, method="spline", unwrap=True),
             "elevation": estimate_angle_rate(time_s, world_el_deg, method="spline"),
         },
+        "kalman_cv": {
+            "azimuth": kalman_azimuth.estimated_rate_deg_s,
+            "elevation": kalman_elevation.estimated_rate_deg_s,
+        },
     }
     synchronized["world_az_unwrapped_deg"] = np.rad2deg(np.unwrap(np.deg2rad(world_az_deg)))
     synchronized["az_rate_gradient_deg_s"] = rate_candidates["gradient"]["azimuth"]
@@ -711,6 +717,10 @@ def run_q1_analysis(
     synchronized["el_rate_local_polynomial_deg_s"] = rate_candidates["local_polynomial"]["elevation"]
     synchronized["az_rate_spline_deg_s"] = rate_candidates["spline"]["azimuth"]
     synchronized["el_rate_spline_deg_s"] = rate_candidates["spline"]["elevation"]
+    synchronized["world_az_kalman_cv_deg"] = kalman_azimuth.filtered_angle_deg
+    synchronized["world_el_kalman_cv_deg"] = kalman_elevation.filtered_angle_deg
+    synchronized["az_rate_kalman_cv_deg_s"] = kalman_azimuth.estimated_rate_deg_s
+    synchronized["el_rate_kalman_cv_deg_s"] = kalman_elevation.estimated_rate_deg_s
 
     bundle_points = estimate_local_ray_bundle_points(
         time_s=time_s,
@@ -734,6 +744,10 @@ def run_q1_analysis(
     rate_metrics = build_rate_metrics(time_s, synchronized, rate_candidates)
     rate_selection = select_rate_method(rate_metrics)
     selected_rate_method = rate_selection["selected_method"]
+    visual_rate_candidates = {
+        method_name: rate_candidates[method_name]
+        for method_name in ("gradient", "savgol", "local_polynomial", "spline")
+    }
 
     data_csv = output_dir / "q1_world_angles.csv"
     candidates_csv = output_dir / "q1_convention_candidates.csv"
@@ -753,7 +767,7 @@ def run_q1_analysis(
             synchronized=synchronized,
             convention_selection=convention_selection,
             selected_convention=selected_convention,
-            rate_candidates=rate_candidates,
+            rate_candidates=visual_rate_candidates,
             rate_metrics=rate_metrics,
             selected_rate_method=selected_rate_method,
             bundle_points=bundle_points,
@@ -796,6 +810,16 @@ def run_q1_analysis(
             "elevation_std": float(np.std(selected_rates["elevation"])),
             "azimuth_peak_abs": float(np.max(np.abs(selected_rates["azimuth"]))),
             "elevation_peak_abs": float(np.max(np.abs(selected_rates["elevation"]))),
+        },
+        "kalman_tuning": {
+            "azimuth": {
+                "sigma_z_deg": float(kalman_azimuth.sigma_z_deg),
+                "sigma_a_deg_s2": float(kalman_azimuth.sigma_a_deg_s2),
+            },
+            "elevation": {
+                "sigma_z_deg": float(kalman_elevation.sigma_z_deg),
+                "sigma_a_deg_s2": float(kalman_elevation.sigma_a_deg_s2),
+            },
         },
         "rate_metrics": rate_metrics.to_dict(orient="records"),
         "best_candidate_by_composite_score": convention_selection.candidate_table.iloc[0].to_dict(),

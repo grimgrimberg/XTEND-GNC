@@ -37,6 +37,20 @@ def test_run_q1_analysis_completes_and_emits_full_static_artifact_set(tmp_path):
     assert summary["selected_rate_method"] == summary["rate_selection"]["selected_method"]
 
 
+def test_run_q1_analysis_summary_includes_kalman_cv_ranking_and_tuning(tmp_path):
+    summary = run_q1_analysis(tmp_path, data_path("examGuidance.csv"), render_animation=False)
+
+    ranking_methods = {row["method"] for row in summary["rate_selection"]["ranking"]}
+    assert "kalman_cv" in ranking_methods
+
+    kalman_tuning = summary["kalman_tuning"]
+    assert set(kalman_tuning) == {"azimuth", "elevation"}
+    for channel_name in ("azimuth", "elevation"):
+        channel_tuning = kalman_tuning[channel_name]
+        assert channel_tuning["sigma_z_deg"] > 0.0
+        assert channel_tuning["sigma_a_deg_s2"] > 0.0
+
+
 def test_run_q2_analysis_emits_12_bundle_directories_with_required_static_files(tmp_path):
     summary = run_q2_analysis(
         tmp_path,
