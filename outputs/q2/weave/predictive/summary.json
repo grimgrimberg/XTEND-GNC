@@ -1,7 +1,7 @@
 {
   "target_mode": "weave",
   "guidance_mode": "predictive",
-  "bundle_dir": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\predictive",
+  "bundle_dir": "outputs\\q2\\weave\\predictive",
   "scenario": {
     "target_initial_position_m": [
       800.0,
@@ -35,9 +35,9 @@
     "peak_los_rate_radps": 0.43201533774136514
   },
   "artifact_paths": [
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\predictive\\trajectory.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\predictive\\constraints.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\predictive\\engagement.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\predictive\\animation.gif"
+    "outputs\\q2\\weave\\predictive\\trajectory.png",
+    "outputs\\q2\\weave\\predictive\\constraints.png",
+    "outputs\\q2\\weave\\predictive\\engagement.png",
+    "outputs\\q2\\weave\\predictive\\animation.gif"
   ]
 }

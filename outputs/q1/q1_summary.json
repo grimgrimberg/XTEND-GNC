@@ -1,6 +1,6 @@
 {
   "source_csv": "C:\\Users\\yuval\\XTEND-GNC\\examGuidance.csv",
-  "output_dir": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q1",
+  "output_dir": "outputs\\q1",
   "selected_convention": {
     "quaternion_is_body_to_world": false,
     "camera_positive_azimuth_right": true,
@@ -65,8 +65,8 @@
     "elevation_min": -45.692850351497235,
     "elevation_max": -13.677585791097721
   },
-  "selected_rate_method": "local_polynomial",
-  "selected_rate_rationale": "local_polynomial was selected because it gives the best overall trade between low latency and low noise on this log, while still staying well-behaved on reconstruction and edge checks.",
+  "selected_rate_method": "savgol",
+  "selected_rate_rationale": "savgol was selected because it gives the best overall trade between low latency and low noise on this log, while still staying well-behaved on reconstruction and edge checks.",
   "rate_selection": {
     "policy": "Rank by weighted normalized composite score with lower-is-better metrics. Latency proxy and noise proxy carry the dominant weights so the selected method follows the prompt's noise-versus-latency requirement; reconstruction RMSE, edge proxy, and holdout RMSE remain as secondary stability checks.",
     "weights": {
@@ -76,9 +76,28 @@
       "edge_proxy_mean_deg_per_s": 0.05,
       "holdout_rmse_mean_deg": 0.05
     },
-    "selected_method": "local_polynomial",
-    "selected_method_rationale": "local_polynomial was selected because it gives the best overall trade between low latency and low noise on this log, while still staying well-behaved on reconstruction and edge checks.",
+    "selected_method": "savgol",
+    "selected_method_rationale": "savgol was selected because it gives the best overall trade between low latency and low noise on this log, while still staying well-behaved on reconstruction and edge checks.",
     "ranking": [
+      {
+        "method": "savgol",
+        "lag_abs_mean_s": 0.009986281394958496,
+        "reconstruction_rmse_mean_deg": 0.3843031605020651,
+        "noise_proxy_mean_deg_per_s": 2.075256773223626,
+        "edge_proxy_mean_deg_per_s": 73.03256695510365,
+        "holdout_rmse_mean_deg": 0.13022479282068455,
+        "lag_abs_mean_s_normalized": 0.1,
+        "lag_abs_mean_s_weighted_score": 0.04000000000000001,
+        "noise_proxy_mean_deg_per_s_normalized": 0.023314423240572795,
+        "noise_proxy_mean_deg_per_s_weighted_score": 0.009325769296229119,
+        "reconstruction_rmse_mean_deg_normalized": 0.11164578388748457,
+        "reconstruction_rmse_mean_deg_weighted_score": 0.011164578388748458,
+        "edge_proxy_mean_deg_per_s_normalized": 0.052072854120299404,
+        "edge_proxy_mean_deg_per_s_weighted_score": 0.00260364270601497,
+        "holdout_rmse_mean_deg_normalized": 0.0,
+        "holdout_rmse_mean_deg_weighted_score": 0.0,
+        "composite_score": 0.06309399039099256
+      },
       {
         "method": "local_polynomial",
         "lag_abs_mean_s": 0.0,
@@ -88,34 +107,34 @@
         "holdout_rmse_mean_deg": 0.13022479282068455,
         "lag_abs_mean_s_normalized": 0.0,
         "lag_abs_mean_s_weighted_score": 0.0,
-        "noise_proxy_mean_deg_per_s_normalized": 0.3195902663460731,
-        "noise_proxy_mean_deg_per_s_weighted_score": 0.12783610653842925,
+        "noise_proxy_mean_deg_per_s_normalized": 0.3354536268534862,
+        "noise_proxy_mean_deg_per_s_weighted_score": 0.13418145074139448,
         "reconstruction_rmse_mean_deg_normalized": 0.0,
         "reconstruction_rmse_mean_deg_weighted_score": 0.0,
-        "edge_proxy_mean_deg_per_s_normalized": 0.4694465454393279,
-        "edge_proxy_mean_deg_per_s_weighted_score": 0.023472327271966395,
+        "edge_proxy_mean_deg_per_s_normalized": 0.49707397808168663,
+        "edge_proxy_mean_deg_per_s_weighted_score": 0.024853698904084332,
         "holdout_rmse_mean_deg_normalized": 0.0,
         "holdout_rmse_mean_deg_weighted_score": 0.0,
-        "composite_score": 0.15130843381039566
+        "composite_score": 0.15903514964547882
       },
       {
-        "method": "savgol",
-        "lag_abs_mean_s": 0.009986281394958496,
-        "reconstruction_rmse_mean_deg": 0.3843031605020651,
-        "noise_proxy_mean_deg_per_s": 2.075256773223626,
-        "edge_proxy_mean_deg_per_s": 73.03256695510365,
+        "method": "gradient",
+        "lag_abs_mean_s": 0.0,
+        "reconstruction_rmse_mean_deg": 0.6762137374249237,
+        "noise_proxy_mean_deg_per_s": 11.444590854625094,
+        "edge_proxy_mean_deg_per_s": 143.23490357825528,
         "holdout_rmse_mean_deg": 0.13022479282068455,
-        "lag_abs_mean_s_normalized": 1.0,
-        "lag_abs_mean_s_weighted_score": 0.4,
-        "noise_proxy_mean_deg_per_s_normalized": 0.0,
-        "noise_proxy_mean_deg_per_s_weighted_score": 0.0,
-        "reconstruction_rmse_mean_deg_normalized": 0.31249963250564994,
-        "reconstruction_rmse_mean_deg_weighted_score": 0.031249963250564994,
-        "edge_proxy_mean_deg_per_s_normalized": 0.0,
-        "edge_proxy_mean_deg_per_s_weighted_score": 0.0,
+        "lag_abs_mean_s_normalized": 0.0,
+        "lag_abs_mean_s_weighted_score": 0.0,
+        "noise_proxy_mean_deg_per_s_normalized": 0.8059666378045431,
+        "noise_proxy_mean_deg_per_s_weighted_score": 0.3223866551218173,
+        "reconstruction_rmse_mean_deg_normalized": 0.3572669285793993,
+        "reconstruction_rmse_mean_deg_weighted_score": 0.03572669285793993,
+        "edge_proxy_mean_deg_per_s_normalized": 0.8689936914331016,
+        "edge_proxy_mean_deg_per_s_weighted_score": 0.04344968457165508,
         "holdout_rmse_mean_deg_normalized": 0.0,
         "holdout_rmse_mean_deg_weighted_score": 0.0,
-        "composite_score": 0.431249963250565
+        "composite_score": 0.40156303255141235
       },
       {
         "method": "spline",
@@ -128,40 +147,50 @@
         "lag_abs_mean_s_weighted_score": 0.0,
         "noise_proxy_mean_deg_per_s_normalized": 1.0,
         "noise_proxy_mean_deg_per_s_weighted_score": 0.4,
-        "reconstruction_rmse_mean_deg_normalized": 0.006092219732446709,
-        "reconstruction_rmse_mean_deg_weighted_score": 0.0006092219732446709,
+        "reconstruction_rmse_mean_deg_normalized": 0.0021765486320420454,
+        "reconstruction_rmse_mean_deg_weighted_score": 0.00021765486320420455,
         "edge_proxy_mean_deg_per_s_normalized": 1.0,
         "edge_proxy_mean_deg_per_s_weighted_score": 0.05,
         "holdout_rmse_mean_deg_normalized": 0.0,
         "holdout_rmse_mean_deg_weighted_score": 0.0,
-        "composite_score": 0.45060922197324466
+        "composite_score": 0.4502176548632042
       },
       {
-        "method": "gradient",
-        "lag_abs_mean_s": 0.0,
-        "reconstruction_rmse_mean_deg": 0.6762137374249237,
-        "noise_proxy_mean_deg_per_s": 11.444590854625094,
-        "edge_proxy_mean_deg_per_s": 143.23490357825528,
+        "method": "kalman_cv",
+        "lag_abs_mean_s": 0.09986281394958496,
+        "reconstruction_rmse_mean_deg": 1.4400754233604853,
+        "noise_proxy_mean_deg_per_s": 1.7961537231187792,
+        "edge_proxy_mean_deg_per_s": 68.55767065314805,
         "holdout_rmse_mean_deg": 0.13022479282068455,
-        "lag_abs_mean_s_normalized": 0.0,
-        "lag_abs_mean_s_weighted_score": 0.0,
-        "noise_proxy_mean_deg_per_s_normalized": 0.8013348749970839,
-        "noise_proxy_mean_deg_per_s_weighted_score": 0.32053394999883356,
+        "lag_abs_mean_s_normalized": 1.0,
+        "lag_abs_mean_s_weighted_score": 0.4,
+        "noise_proxy_mean_deg_per_s_normalized": 0.0,
+        "noise_proxy_mean_deg_per_s_weighted_score": 0.0,
         "reconstruction_rmse_mean_deg_normalized": 1.0,
         "reconstruction_rmse_mean_deg_weighted_score": 0.1,
-        "edge_proxy_mean_deg_per_s_normalized": 0.8617970704432973,
-        "edge_proxy_mean_deg_per_s_weighted_score": 0.04308985352216487,
+        "edge_proxy_mean_deg_per_s_normalized": 0.0,
+        "edge_proxy_mean_deg_per_s_weighted_score": 0.0,
         "holdout_rmse_mean_deg_normalized": 0.0,
         "holdout_rmse_mean_deg_weighted_score": 0.0,
-        "composite_score": 0.4636238035209984
+        "composite_score": 0.5
       }
     ]
   },
   "rate_summary_deg_s": {
-    "azimuth_std": 15.28580482492331,
-    "elevation_std": 14.167249986236586,
-    "azimuth_peak_abs": 156.06515517853927,
-    "elevation_peak_abs": 152.92378218809614
+    "azimuth_std": 13.155546259797925,
+    "elevation_std": 10.034874673071007,
+    "azimuth_peak_abs": 87.08367184855624,
+    "elevation_peak_abs": 76.67917602376089
+  },
+  "kalman_tuning": {
+    "azimuth": {
+      "sigma_z_deg": 0.1,
+      "sigma_a_deg_s2": 6.843172616915405
+    },
+    "elevation": {
+      "sigma_z_deg": 0.11023584125101114,
+      "sigma_a_deg_s2": 21.927640717300836
+    }
   },
   "rate_metrics": [
     {
@@ -201,6 +230,15 @@
       "holdout_rmse_deg": 0.07410589245755318
     },
     {
+      "channel": "azimuth",
+      "method": "kalman_cv",
+      "noise_proxy_deg_per_s": 1.1285851269930078,
+      "edge_proxy_deg_per_s": 71.42848713554484,
+      "lag_proxy_seconds": 0.11983537673950195,
+      "reconstruction_rmse_deg": 1.8828874281533647,
+      "holdout_rmse_deg": 0.07410589245755318
+    },
+    {
       "channel": "elevation",
       "method": "gradient",
       "noise_proxy_deg_per_s": 12.263563769281697,
@@ -235,6 +273,15 @@
       "lag_proxy_seconds": 0.0,
       "reconstruction_rmse_deg": 0.2665913581641961,
       "holdout_rmse_deg": 0.1863436931838159
+    },
+    {
+      "channel": "elevation",
+      "method": "kalman_cv",
+      "noise_proxy_deg_per_s": 2.4637223192445505,
+      "edge_proxy_deg_per_s": 65.68685417075127,
+      "lag_proxy_seconds": 0.07989025115966797,
+      "reconstruction_rmse_deg": 0.9972634185676059,
+      "holdout_rmse_deg": 0.1863436931838159
     }
   ],
   "best_candidate_by_composite_score": {
@@ -255,20 +302,21 @@
     "bundle_residual_p90_m": 0.11447859214262643
   },
   "artifact_paths": [
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q1\\q1_world_angles.csv",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q1\\q1_convention_candidates.csv",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q1\\q1_bundle_points.csv",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q1\\q1_ground_footprint.csv",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q1\\q1_sync_diagnostics.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q1\\q1_frame_diagnostics.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q1\\q1_sync_quality.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q1\\q1_world_angles.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q1\\q1_rate_estimates.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q1\\q1_rate_raw_vs_clean.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q1\\q1_camera_fov.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q1\\q1_bundle_residuals.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q1\\q1_geometry_topdown.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q1\\q1_geometry_3d.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q1\\q1_geometry_animation.gif"
+    "outputs\\q1\\q1_world_angles.csv",
+    "outputs\\q1\\q1_convention_candidates.csv",
+    "outputs\\q1\\q1_bundle_points.csv",
+    "outputs\\q1\\q1_ground_footprint.csv",
+    "outputs\\q1\\q1_sync_diagnostics.png",
+    "outputs\\q1\\q1_frame_diagnostics.png",
+    "outputs\\q1\\q1_sync_quality.png",
+    "outputs\\q1\\q1_world_angles.png",
+    "outputs\\q1\\q1_rate_estimates.png",
+    "outputs\\q1\\q1_rate_raw_vs_clean.png",
+    "outputs\\q1\\q1_kalman_tracking.png",
+    "outputs\\q1\\q1_camera_fov.png",
+    "outputs\\q1\\q1_bundle_residuals.png",
+    "outputs\\q1\\q1_geometry_topdown.png",
+    "outputs\\q1\\q1_geometry_3d.png",
+    "outputs\\q1\\q1_geometry_animation.gif"
   ]
 }

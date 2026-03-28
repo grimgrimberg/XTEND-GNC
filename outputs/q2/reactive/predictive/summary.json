@@ -1,7 +1,7 @@
 {
   "target_mode": "reactive",
   "guidance_mode": "predictive",
-  "bundle_dir": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\predictive",
+  "bundle_dir": "outputs\\q2\\reactive\\predictive",
   "scenario": {
     "target_initial_position_m": [
       800.0,
@@ -35,9 +35,9 @@
     "peak_los_rate_radps": 2.253649219394614
   },
   "artifact_paths": [
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\predictive\\trajectory.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\predictive\\constraints.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\predictive\\engagement.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\predictive\\animation.gif"
+    "outputs\\q2\\reactive\\predictive\\trajectory.png",
+    "outputs\\q2\\reactive\\predictive\\constraints.png",
+    "outputs\\q2\\reactive\\predictive\\engagement.png",
+    "outputs\\q2\\reactive\\predictive\\animation.gif"
   ]
 }

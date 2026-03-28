@@ -1,7 +1,7 @@
 {
   "target_mode": "bounded_turn",
   "guidance_mode": "predictive",
-  "bundle_dir": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\predictive",
+  "bundle_dir": "outputs\\q2\\bounded_turn\\predictive",
   "scenario": {
     "target_initial_position_m": [
       800.0,
@@ -35,9 +35,9 @@
     "peak_los_rate_radps": 1.9182657755711425
   },
   "artifact_paths": [
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\predictive\\trajectory.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\predictive\\constraints.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\predictive\\engagement.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\predictive\\animation.gif"
+    "outputs\\q2\\bounded_turn\\predictive\\trajectory.png",
+    "outputs\\q2\\bounded_turn\\predictive\\constraints.png",
+    "outputs\\q2\\bounded_turn\\predictive\\engagement.png",
+    "outputs\\q2\\bounded_turn\\predictive\\animation.gif"
   ]
 }

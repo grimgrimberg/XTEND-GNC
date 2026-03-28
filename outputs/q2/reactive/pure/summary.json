@@ -1,7 +1,7 @@
 {
   "target_mode": "reactive",
   "guidance_mode": "pure",
-  "bundle_dir": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pure",
+  "bundle_dir": "outputs\\q2\\reactive\\pure",
   "scenario": {
     "target_initial_position_m": [
       800.0,
@@ -35,9 +35,9 @@
     "peak_los_rate_radps": 4.001324629697886
   },
   "artifact_paths": [
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pure\\trajectory.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pure\\constraints.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pure\\engagement.png",
-    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pure\\animation.gif"
+    "outputs\\q2\\reactive\\pure\\trajectory.png",
+    "outputs\\q2\\reactive\\pure\\constraints.png",
+    "outputs\\q2\\reactive\\pure\\engagement.png",
+    "outputs\\q2\\reactive\\pure\\animation.gif"
   ]
 }
