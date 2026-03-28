@@ -28,6 +28,7 @@ def test_run_q1_analysis_completes_and_emits_full_static_artifact_set(tmp_path):
         "q1_world_angles.png",
         "q1_rate_estimates.png",
         "q1_rate_raw_vs_clean.png",
+        "q1_kalman_tracking.png",
         "q1_camera_fov.png",
         "q1_bundle_residuals.png",
         "q1_geometry_topdown.png",

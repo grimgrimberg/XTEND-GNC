@@ -48,6 +48,12 @@ def create_q1_visuals(
             selected_rate_method,
             plot_config,
         ),
+        plot_kalman_tracking(
+            output_dir / "q1_kalman_tracking.png",
+            synchronized,
+            rate_candidates,
+            plot_config,
+        ),
         plot_camera_fov_reticle(output_dir / "q1_camera_fov.png", synchronized, plot_config),
         plot_bundle_residual_histogram(output_dir / "q1_bundle_residuals.png", bundle_points, plot_config),
         plot_geometry_topdown(output_dir / "q1_geometry_topdown.png", synchronized, bundle_points, ground_footprint, plot_config),
@@ -213,12 +219,15 @@ def plot_rate_estimates(
         "savgol": {"color": PALETTE["accent"], "linewidth": 1.4},
         "local_polynomial": {"color": PALETTE["success"], "linewidth": 2.0},
         "spline": {"color": PALETTE["danger"], "linewidth": 1.2, "alpha": 0.75},
+        "kalman_cv": {"color": PALETTE["secondary"], "linewidth": 1.8, "linestyle": "--"},
     }
     time_s = synchronized["time_s"].to_numpy()
     for method_name, rates in rate_candidates.items():
         label = method_name.replace("_", " ").title()
         axes[0].plot(time_s, rates["azimuth"], label=label, **styles[method_name])
         axes[1].plot(time_s, rates["elevation"], label=label, **styles[method_name])
+    axes[0].plot(time_s, synchronized["az_rate_kalman_cv_deg_s"], label="Kalman Cv", **styles["kalman_cv"])
+    axes[1].plot(time_s, synchronized["el_rate_kalman_cv_deg_s"], label="Kalman Cv", **styles["kalman_cv"])
     axes[0].set_ylabel("Azimuth Rate [deg/s]")
     axes[0].set_title("Azimuth Rate Estimators")
     axes[0].legend(loc="upper right", ncols=2)
@@ -238,6 +247,49 @@ def plot_rate_estimates(
             )
         add_note(axis, "\n".join(summary_lines), x=0.01, y=0.98)
     figure.suptitle("Q1 Rate Estimator Comparison", fontsize=15)
+    close_and_save(figure, output_path, dpi=plot_config.dpi)
+    return output_path
+
+
+def plot_kalman_tracking(
+    output_path: Path,
+    synchronized: pd.DataFrame,
+    rate_candidates: dict[str, dict[str, np.ndarray]],
+    plot_config: PlotConfig,
+) -> Path:
+    figure, axes = plt.subplots(2, 2, figsize=(16.0, 9.5), sharex="col", constrained_layout=True)
+    time_s = synchronized["time_s"].to_numpy()
+
+    axes[0, 0].plot(time_s, synchronized["world_az_deg"], color=PALETTE["soft"], linewidth=0.9, label="raw azimuth")
+    axes[0, 0].plot(time_s, synchronized["world_az_kalman_deg"], color=PALETTE["secondary"], linewidth=1.8, label="Kalman azimuth")
+    axes[0, 0].set_ylabel("Angle [deg]")
+    axes[0, 0].set_title("Azimuth Tracking")
+    axes[0, 0].legend(loc="upper right")
+
+    axes[1, 0].plot(time_s, rate_candidates["gradient"]["azimuth"], color=PALETTE["soft"], linewidth=0.9, label="gradient")
+    axes[1, 0].plot(time_s, synchronized["az_rate_kalman_cv_deg_s"], color=PALETTE["secondary"], linewidth=1.8, label="Kalman rate")
+    axes[1, 0].set_ylabel("Rate [deg/s]")
+    axes[1, 0].set_xlabel("Time Since First Camera Sample [s]")
+    axes[1, 0].legend(loc="upper right")
+
+    axes[0, 1].plot(time_s, synchronized["world_el_deg"], color=PALETTE["soft"], linewidth=0.9, label="raw elevation")
+    axes[0, 1].plot(time_s, synchronized["world_el_kalman_deg"], color=PALETTE["secondary"], linewidth=1.8, label="Kalman elevation")
+    axes[0, 1].set_ylabel("Angle [deg]")
+    axes[0, 1].set_title("Elevation Tracking")
+    axes[0, 1].legend(loc="upper right")
+
+    axes[1, 1].plot(time_s, rate_candidates["gradient"]["elevation"], color=PALETTE["soft"], linewidth=0.9, label="gradient")
+    axes[1, 1].plot(time_s, synchronized["el_rate_kalman_cv_deg_s"], color=PALETTE["secondary"], linewidth=1.8, label="Kalman rate")
+    axes[1, 1].set_ylabel("Rate [deg/s]")
+    axes[1, 1].set_xlabel("Time Since First Camera Sample [s]")
+    axes[1, 1].legend(loc="upper right")
+
+    add_note(
+        axes[1, 1],
+        "Kalman candidate uses a causal constant-velocity state model.\n"
+        "Raw angles/rates stay visible so the noise-versus-latency trade is inspectable.",
+    )
+    figure.suptitle("Q1 Kalman Tracking Diagnostic", fontsize=15)
     close_and_save(figure, output_path, dpi=plot_config.dpi)
     return output_path
 
