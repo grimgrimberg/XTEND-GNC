@@ -965,9 +965,14 @@ def _kalman_cv_noise_scales(
         if len(rate_change) == 0:
             sigma_a_deg_s2 = 1.0
         else:
-            rate_change_center = float(np.median(rate_change))
-            rate_change_scale = 1.4826 * float(np.median(np.abs(rate_change - rate_change_center)))
-            sigma_a_deg_s2 = float(max(0.1, rate_change_scale))
+            dt = np.diff(prefix_time)
+            safe_dt = np.maximum(dt, 1e-3)
+            acceleration = rate_change / safe_dt
+            accel_center = float(np.median(acceleration))
+            accel_scale = 1.4826 * float(np.median(np.abs(acceleration - accel_center)))
+            # Keep the default process noise conservative so the filter remains
+            # smoother than a raw differentiator on short, noisy sequences.
+            sigma_a_deg_s2 = float(max(0.1, 0.05 * accel_scale))
     return float(sigma_z_deg), float(sigma_a_deg_s2)
 
 
