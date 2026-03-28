@@ -171,21 +171,10 @@ def test_kalman_cv_is_causal_for_earlier_samples():
     time_s = np.array([0.0, 0.06, 0.17, 0.33, 0.56, 0.84], dtype=float)
     angle_deg = 7.5 + 2.0 * time_s + np.array([0.0, 0.07, -0.03, 0.05, -0.02, 0.01], dtype=float)
 
-    resolved = kalman_cv(time_s, angle_deg)
-    baseline = kalman_cv(
-        time_s,
-        angle_deg,
-        sigma_z_deg=resolved.sigma_z_deg,
-        sigma_a_deg_s2=resolved.sigma_a_deg_s2,
-    )
+    baseline = kalman_cv(time_s, angle_deg)
     perturbed = angle_deg.copy()
     perturbed[-1] += 30.0
-    changed = kalman_cv(
-        time_s,
-        perturbed,
-        sigma_z_deg=resolved.sigma_z_deg,
-        sigma_a_deg_s2=resolved.sigma_a_deg_s2,
-    )
+    changed = kalman_cv(time_s, perturbed)
 
     assert np.allclose(baseline.filtered_angle_deg[:-1], changed.filtered_angle_deg[:-1], atol=1e-12)
     assert np.allclose(baseline.estimated_rate_deg_s[:-1], changed.estimated_rate_deg_s[:-1], atol=1e-12)
@@ -204,9 +193,9 @@ def test_estimate_angle_rate_exposes_kalman_cv_and_short_sequence_falls_back():
     assert short_rate is not None
     assert np.allclose(short_rate, np.array([2.0, 2.0], dtype=float), atol=1e-12)
 
-    time_s = np.array([0.0, 0.05, 0.16, 0.31, 0.53], dtype=float)
+    time_s = np.array([0.0, 0.05, 0.16, 0.31, 0.53, 0.78], dtype=float)
     truth_rate_deg_s = -1.5
-    angle_deg = 8.0 + truth_rate_deg_s * time_s + np.array([0.0, 0.14, -0.11, 0.08, -0.04], dtype=float)
+    angle_deg = 8.0 + truth_rate_deg_s * time_s + np.array([0.0, 0.14, -0.11, 0.08, -0.04, 0.06], dtype=float)
 
     rate_from_estimator = run_kalman_rate(time_s, angle_deg)
     kalman_cv = getattr(q1_pipeline, "kalman_cv", None)

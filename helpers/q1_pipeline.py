@@ -948,7 +948,12 @@ def _kalman_cv_noise_scales(
     sigma_z_deg: float | None,
     sigma_a_deg_s2: float | None,
 ) -> tuple[float, float]:
-    prefix_count = min(len(angle_deg), 7)
+    # Resolve defaults from an initial causal prefix only, leaving at least one
+    # tail sample outside the tuning window whenever the sequence is long enough.
+    if len(angle_deg) >= 5:
+        prefix_count = min(5, len(angle_deg) - 1)
+    else:
+        prefix_count = len(angle_deg)
     prefix_time = np.asarray(time_s[:prefix_count], dtype=float)
     prefix_angle = np.asarray(angle_deg[:prefix_count], dtype=float)
     if sigma_z_deg is None:
