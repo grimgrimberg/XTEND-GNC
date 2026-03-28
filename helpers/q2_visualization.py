@@ -112,7 +112,11 @@ def plot_nominal_trajectory(
     axis_xz.set_ylabel("Up Z [m]")
     axis_xz.set_title("XZ Projection")
     axis_xz.legend(loc="best")
-    add_note(axis_xz, "The baseline target motion is still the assignment-aligned straight case.\nThe richer geometry comes from the extension scenarios, not from silently altering the baseline.")
+    add_note(
+        axis_xz,
+        "The baseline still uses straight, constant-speed target motion.\n"
+        "Only the unspecified heading is fixed to a mild crossing case so the 3D plot is readable.",
+    )
     figure.suptitle("Q2 Nominal Interception Geometry", fontsize=15)
     close_and_save(figure, output_path, dpi=plot_config.dpi)
     return output_path
@@ -168,7 +172,7 @@ def plot_bundle_trajectory(
 
 
 def plot_constraint_traces(output_path: Path, config: SimulationConfig, result: SimulationResult, plot_config: PlotConfig) -> Path:
-    figure, axes = plt.subplots(4, 1, figsize=(15.0, 10.5), sharex=True, constrained_layout=True)
+    figure, axes = plt.subplots(5, 1, figsize=(15.0, 12.0), sharex=True, constrained_layout=True)
     interceptor_speed = np.linalg.norm(result.interceptor_velocity_mps, axis=1)
     target_speed = np.linalg.norm(result.target_velocity_mps, axis=1)
     axes[0].plot(result.time_s, result.distance_m, color=PALETTE["primary"], label="distance")
@@ -195,11 +199,16 @@ def plot_constraint_traces(output_path: Path, config: SimulationConfig, result: 
     axes[2].legend(loc="upper right", ncols=2)
 
     axes[3].plot(result.time_s, result.closing_speed_mps, color=PALETTE["success"], label="closing speed")
-    axes[3].plot(result.time_s, result.los_rate_norm_radps, color=PALETTE["accent"], label="LOS rate norm")
-    axes[3].set_ylabel("Speed / Rate")
-    axes[3].set_xlabel("Time [s]")
+    axes[3].set_ylabel("Closing Speed [m/s]")
     axes[3].legend(loc="upper right")
-    add_note(axes[3], "Commanded vs applied acceleration exposes clipping directly.\nThis keeps the X/Y constraint enforcement visible rather than implicit.", y=1.18)
+
+    # Closing speed and LOS rate use different physical units, so keep them on
+    # separate panels instead of asking the reader to decode a mixed axis.
+    axes[4].plot(result.time_s, result.los_rate_norm_radps, color=PALETTE["accent"], label="LOS rate norm")
+    axes[4].set_ylabel("LOS Rate [rad/s]")
+    axes[4].set_xlabel("Time [s]")
+    axes[4].legend(loc="upper right")
+    add_note(axes[4], "Commanded vs applied acceleration exposes clipping directly.\nThis keeps the X/Y constraint enforcement visible rather than implicit.", y=1.18)
     figure.suptitle("Q2 Constraint Verification", fontsize=15)
     close_and_save(figure, output_path, dpi=plot_config.dpi)
     return output_path
@@ -293,8 +302,12 @@ def plot_overview_matrix(output_path: Path, scenario_grid: pd.DataFrame, plot_co
     pivot_time = scenario_grid.pivot(index="target_mode", columns="guidance_mode", values="intercept_time_s")
     pivot_distance = scenario_grid.pivot(index="target_mode", columns="guidance_mode", values="minimum_distance_m")
     figure, axes = plt.subplots(1, 2, figsize=(14.5, 5.8), constrained_layout=True)
-    time_image = axes[0].imshow(pivot_time.to_numpy(dtype=float), aspect="auto", cmap="viridis")
-    distance_image = axes[1].imshow(pivot_distance.to_numpy(dtype=float), aspect="auto", cmap="magma_r")
+    time_cmap = plt.colormaps["viridis"].copy()
+    time_cmap.set_bad(color="#e7e7e7")
+    time_values = pivot_time.to_numpy(dtype=float)
+    distance_values = pivot_distance.to_numpy(dtype=float)
+    time_image = axes[0].imshow(time_values, aspect="auto", cmap=time_cmap)
+    distance_image = axes[1].imshow(distance_values, aspect="auto", cmap="magma_r")
     for axis, pivot, title in (
         (axes[0], pivot_time, "Intercept Time [s]"),
         (axes[1], pivot_distance, "Minimum Distance [m]"),
@@ -307,7 +320,13 @@ def plot_overview_matrix(output_path: Path, scenario_grid: pd.DataFrame, plot_co
         for row_index in range(len(pivot.index)):
             for column_index in range(len(pivot.columns)):
                 value = pivot.to_numpy(dtype=float)[row_index, column_index]
-                axis.text(column_index, row_index, f"{value:.1f}", ha="center", va="center", color="white", fontsize=9.5)
+                if title == "Intercept Time [s]" and np.isnan(value):
+                    label = "MISS"
+                    text_color = PALETTE["ink"]
+                else:
+                    label = f"{value:.1f}"
+                    text_color = "white"
+                axis.text(column_index, row_index, label, ha="center", va="center", color=text_color, fontsize=9.5)
     figure.colorbar(time_image, ax=axes[0], shrink=0.85, label="Seconds")
     figure.colorbar(distance_image, ax=axes[1], shrink=0.85, label="Meters")
     add_note(axes[1], "The baseline `straight` mode remains the assignment answer.\nThe evasive modes are clearly labeled extensions so a reviewer can separate core solution from extras.", y=1.16)

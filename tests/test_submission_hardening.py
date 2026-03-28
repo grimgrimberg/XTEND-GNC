@@ -3,9 +3,14 @@ from __future__ import annotations
 from itertools import product
 from pathlib import Path
 
+import helpers.plotting as plotting
 from helpers.paths import data_path
 from helpers.q1_pipeline import run_q1_analysis
 from helpers.q2_simulation import run_q2_analysis
+
+
+def test_matplotlib_uses_headless_backend():
+    assert "agg" in plotting.plt.get_backend().lower()
 
 
 def test_run_q1_analysis_completes_and_emits_full_static_artifact_set(tmp_path):

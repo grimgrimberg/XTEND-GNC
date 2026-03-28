@@ -10,6 +10,8 @@ class GuidanceConfig:
     """High-level guidance-law configuration."""
 
     mode: str = "predictive"
+    # Velocity-shaping time constant, not a vehicle-identified dynamic model.
+    # Smaller values command more aggressive acceleration before clipping.
     response_time_s: float = 0.8
     navigation_constant: float = 3.0
 
@@ -100,6 +102,7 @@ def build_guidance_command(
     mode = guidance.mode.lower()
     relative_position = np.asarray(target_position_m, dtype=float) - np.asarray(interceptor_position_m, dtype=float)
     relative_velocity = np.asarray(target_velocity_mps, dtype=float) - np.asarray(interceptor_velocity_mps, dtype=float)
+    # Prevent the shaping constant from collapsing below the integration step.
     response_time_s = max(guidance.response_time_s, dt_s)
     lead_time_s: float | None = None
     los_rate_norm = float(np.linalg.norm(np.cross(relative_position, relative_velocity)) / max(np.linalg.norm(relative_position) ** 2, 1e-9))

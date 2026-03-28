@@ -5,6 +5,8 @@ from pathlib import Path
 from typing import Any
 
 import matplotlib as mpl
+# Always render plots headlessly so verification works on machines without a GUI.
+mpl.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 

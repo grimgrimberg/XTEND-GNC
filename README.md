@@ -7,6 +7,8 @@ This repository contains a submission-ready answer to the two tasks in `10001913
 
 ## Quick Start
 
+Use Python `3.10+`.
+
 ```bash
 python3 -m pip install -r requirements.txt
 python3 Q1.py
@@ -55,12 +57,15 @@ python3 Q2.py --skip-animation
 - The CSV is treated as an interleaved event log, not a row-synchronized table.
 - Camera timestamps are the master timeline because LOS exists only on camera samples.
 - The camera/body alignment model is explicit, but the quaternion direction and sign conventions are still inferred from data-driven diagnostics rather than observed directly.
+- The reported rate method is chosen with a noise/latency-first policy; reconstruction and edge metrics are secondary guards against a numerically pretty but untrustworthy derivative.
 - Q1 geometry plots are plausibility diagnostics only. The dataset does not contain target range truth.
 
 ### Q2
 
-- The baseline target heading follows the initial line-of-sight direction from the interceptor to the target. This is an explicit default because the prompt does not specify heading.
+- The prompt does not specify target heading. The baseline therefore fixes a mild `35 deg` horizontal heading so the straight-target plot remains readable without turning the assignment into an aggressive crossing-only case.
+- The baseline preserves the climb component implied by the original radial-away default, so the only intentional geometry change is the horizontal heading.
 - Only `X/Y` acceleration limits are enforced numerically because the prompt does not specify a `Z` limit.
+- The guidance command uses a first-order velocity-shaping time constant `tau = 0.8 s`. This is a tuning constant, not an identified vehicle model.
 - The `straight + predictive` case is the assignment-aligned baseline.
 - All other target modes and guidance-law comparisons are labeled extensions, not silent changes to the assignment scenario.
 
@@ -141,8 +146,8 @@ python3 Q1.py
 python3 Q2.py
 ```
 
-Fresh verification from the repo root on `2026-03-26`:
+Fresh verification from the repo root on `2026-03-28`:
 
-- `python3 -m pytest -q -s` -> `45 passed in 590.91s`
-- `python3 Q1.py` -> regenerated the full `outputs/q1/` artifact set, including `q1_geometry_animation.gif` and `q1_summary.json`
-- `python3 Q2.py` -> regenerated `outputs/q2/q2_summary.json`, `outputs/q2/q2_overview_matrix.png`, and all `12` scenario bundles
+- `python -m pytest -q` -> `48 passed in 443.11s`
+- `python Q1.py --skip-animation --output-dir outputs/q1_verification` -> regenerated a clean static Q1 artifact set and `outputs/q1_verification/q1_summary.json`
+- `python Q2.py --skip-animation --output-dir outputs/q2_verification_final` -> regenerated `outputs/q2_verification_final/q2_summary.json`, `outputs/q2_verification_final/q2_overview_matrix.png`, and all `12` scenario bundles

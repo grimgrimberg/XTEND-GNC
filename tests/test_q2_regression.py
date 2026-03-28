@@ -79,3 +79,16 @@ def test_run_q2_analysis_emits_all_evasion_scenario_plots(tmp_path):
         artifact_names | {Path(summary["summary_path"]).name}
     )
     assert len(summary["scenario_bundles"]) == 12
+
+
+def test_run_q2_analysis_uses_fixed_documented_baseline_heading(tmp_path):
+    summary = run_q2_analysis(
+        tmp_path,
+        horizon_s=40.0,
+        render_animation=False,
+    )
+
+    velocity = np.asarray(summary["scenario"]["target_velocity_mps"], dtype=float)
+    heading_deg = float(np.rad2deg(np.arctan2(velocity[1], velocity[0])))
+    assert np.isclose(heading_deg, 35.0, atol=1e-6)
+    assert "35" in summary["scenario"]["heading_assumption"]

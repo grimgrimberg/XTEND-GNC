@@ -1,5 +1,5 @@
 {
-  "output_dir": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2",
+  "output_dir": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2",
   "scenario": {
     "target_initial_position_m": [
       800.0,
@@ -7,17 +7,20 @@
       300.0
     ],
     "target_velocity_mps": [
-      11.851899951802347,
-      2.9629749879505867,
+      10.007301064300467,
+      7.007187642357239,
       4.44446248192588
     ],
+    "target_heading_deg": 35.0,
+    "target_vertical_speed_mps": 4.44446248192588,
     "interceptor_initial_position_m": [
       0.0,
       0.0,
       0.0
     ],
     "intercept_radius_m": 2.0,
-    "heading_assumption": "Baseline target heading follows the initial line-of-sight direction unless overridden in sweeps.",
+    "heading_assumption": "Baseline target heading is fixed at 35 deg in the horizontal plane. The prompt leaves heading unspecified; 35 deg is a small shift away from the radial tail-chase so the baseline 3D geometry stays readable.",
+    "target_vertical_speed_assumption": "The baseline preserves the climb component implied by the original radial-away default, so the only intentional geometry change is the horizontal heading.",
     "z_acceleration_assumption": "No Z-axis acceleration limit was provided, so only X/Y limits are enforced numerically by default."
   },
   "constraints": {
@@ -30,39 +33,39 @@
   "selected_target_mode": "straight",
   "selected_result": {
     "intercepted": true,
-    "intercept_time_s": 134.4,
-    "minimum_distance_m": 1.9970563387212914,
+    "intercept_time_s": 129.5,
+    "minimum_distance_m": 1.9725125472252163,
     "max_speed_mps": 20.0,
     "max_abs_accel_x_mps2": 2.5,
     "max_abs_accel_y_mps2": 1.0,
-    "peak_los_rate_radps": 0.004641118189780549
+    "peak_los_rate_radps": 0.006089841483919902
   },
   "predictive_result": {
     "intercepted": true,
-    "intercept_time_s": 134.4,
-    "minimum_distance_m": 1.9970563387212914,
+    "intercept_time_s": 129.5,
+    "minimum_distance_m": 1.9725125472252163,
     "max_speed_mps": 20.0,
     "max_abs_accel_x_mps2": 2.5,
     "max_abs_accel_y_mps2": 1.0,
-    "peak_los_rate_radps": 0.004641118189780549
+    "peak_los_rate_radps": 0.006089841483919902
   },
   "pure_pursuit_reference": {
     "intercepted": true,
-    "intercept_time_s": 134.5,
-    "minimum_distance_m": 1.6630778190283209,
-    "max_speed_mps": 19.99999999993316,
+    "intercept_time_s": 131.25,
+    "minimum_distance_m": 1.8037239100518192,
+    "max_speed_mps": 19.999999980923704,
     "max_abs_accel_x_mps2": 2.5,
     "max_abs_accel_y_mps2": 1.0,
-    "peak_los_rate_radps": 0.004603613766306847
+    "peak_los_rate_radps": 0.006017580204753151
   },
   "pn_result": {
     "intercepted": true,
-    "intercept_time_s": 134.45000000000002,
-    "minimum_distance_m": 1.6560666515885696,
+    "intercept_time_s": 129.55,
+    "minimum_distance_m": 1.640169026078118,
     "max_speed_mps": 20.0,
     "max_abs_accel_x_mps2": 2.5,
     "max_abs_accel_y_mps2": 1.0,
-    "peak_los_rate_radps": 0.004641118189780549
+    "peak_los_rate_radps": 0.006089841483919902
   },
   "heading_sweep_summary": {
     "predictive_success_count": 12,
@@ -77,8 +80,8 @@
       "target_mode": "straight",
       "guidance_mode": "predictive",
       "intercepted": true,
-      "intercept_time_s": 134.4,
-      "minimum_distance_m": 1.9970563387212914,
+      "intercept_time_s": 129.5,
+      "minimum_distance_m": 1.9725125472252163,
       "max_speed_mps": 20.0,
       "max_abs_accel_x_mps2": 2.5,
       "max_abs_accel_y_mps2": 1.0
@@ -87,9 +90,9 @@
       "target_mode": "straight",
       "guidance_mode": "pure",
       "intercepted": true,
-      "intercept_time_s": 134.5,
-      "minimum_distance_m": 1.6630778190283209,
-      "max_speed_mps": 19.99999999993316,
+      "intercept_time_s": 131.25,
+      "minimum_distance_m": 1.8037239100518192,
+      "max_speed_mps": 19.999999980923704,
       "max_abs_accel_x_mps2": 2.5,
       "max_abs_accel_y_mps2": 1.0
     },
@@ -97,8 +100,8 @@
       "target_mode": "straight",
       "guidance_mode": "pn",
       "intercepted": true,
-      "intercept_time_s": 134.45000000000002,
-      "minimum_distance_m": 1.6560666515885696,
+      "intercept_time_s": 129.55,
+      "minimum_distance_m": 1.640169026078118,
       "max_speed_mps": 20.0,
       "max_abs_accel_x_mps2": 2.5,
       "max_abs_accel_y_mps2": 1.0
@@ -107,8 +110,8 @@
       "target_mode": "weave",
       "guidance_mode": "predictive",
       "intercepted": true,
-      "intercept_time_s": 133.4,
-      "minimum_distance_m": 1.6690136928064696,
+      "intercept_time_s": 131.70000000000002,
+      "minimum_distance_m": 1.8912840639344193,
       "max_speed_mps": 20.000000000000004,
       "max_abs_accel_x_mps2": 2.5,
       "max_abs_accel_y_mps2": 1.0
@@ -117,8 +120,8 @@
       "target_mode": "weave",
       "guidance_mode": "pure",
       "intercepted": true,
-      "intercept_time_s": 129.35,
-      "minimum_distance_m": 1.9765389702588827,
+      "intercept_time_s": 135.45000000000002,
+      "minimum_distance_m": 1.864290607573479,
       "max_speed_mps": 20.0,
       "max_abs_accel_x_mps2": 2.5,
       "max_abs_accel_y_mps2": 1.0
@@ -127,8 +130,8 @@
       "target_mode": "weave",
       "guidance_mode": "pn",
       "intercepted": true,
-      "intercept_time_s": 133.55,
-      "minimum_distance_m": 1.612786286753355,
+      "intercept_time_s": 148.1,
+      "minimum_distance_m": 1.5660580822882184,
       "max_speed_mps": 20.000000000000004,
       "max_abs_accel_x_mps2": 2.5,
       "max_abs_accel_y_mps2": 1.0
@@ -137,9 +140,9 @@
       "target_mode": "bounded_turn",
       "guidance_mode": "predictive",
       "intercepted": true,
-      "intercept_time_s": 133.3,
-      "minimum_distance_m": 1.984458024080998,
-      "max_speed_mps": 20.0,
+      "intercept_time_s": 145.4,
+      "minimum_distance_m": 1.6061727922644515,
+      "max_speed_mps": 20.000000000000004,
       "max_abs_accel_x_mps2": 2.5,
       "max_abs_accel_y_mps2": 1.0
     },
@@ -147,8 +150,8 @@
       "target_mode": "bounded_turn",
       "guidance_mode": "pure",
       "intercepted": true,
-      "intercept_time_s": 149.4,
-      "minimum_distance_m": 1.680704432432922,
+      "intercept_time_s": 136.05,
+      "minimum_distance_m": 1.8152843623807053,
       "max_speed_mps": 20.0,
       "max_abs_accel_x_mps2": 2.5,
       "max_abs_accel_y_mps2": 1.0
@@ -157,8 +160,8 @@
       "target_mode": "bounded_turn",
       "guidance_mode": "pn",
       "intercepted": true,
-      "intercept_time_s": 143.9,
-      "minimum_distance_m": 1.5049419234708186,
+      "intercept_time_s": 145.25,
+      "minimum_distance_m": 1.7736696644530094,
       "max_speed_mps": 20.0,
       "max_abs_accel_x_mps2": 2.5,
       "max_abs_accel_y_mps2": 1.0
@@ -167,8 +170,8 @@
       "target_mode": "reactive",
       "guidance_mode": "predictive",
       "intercepted": true,
-      "intercept_time_s": 154.70000000000002,
-      "minimum_distance_m": 1.6381361221408717,
+      "intercept_time_s": 165.10000000000002,
+      "minimum_distance_m": 1.6982312094769856,
       "max_speed_mps": 20.0,
       "max_abs_accel_x_mps2": 2.5,
       "max_abs_accel_y_mps2": 1.0
@@ -178,8 +181,8 @@
       "guidance_mode": "pure",
       "intercepted": false,
       "intercept_time_s": NaN,
-      "minimum_distance_m": 11.90628960160429,
-      "max_speed_mps": 20.000000000000004,
+      "minimum_distance_m": 3.5773909445169503,
+      "max_speed_mps": 20.0,
       "max_abs_accel_x_mps2": 2.5,
       "max_abs_accel_y_mps2": 1.0
     },
@@ -188,7 +191,7 @@
       "guidance_mode": "pn",
       "intercepted": false,
       "intercept_time_s": NaN,
-      "minimum_distance_m": 2.2705019507393884,
+      "minimum_distance_m": 6.558630590581968,
       "max_speed_mps": 20.0,
       "max_abs_accel_x_mps2": 2.5,
       "max_abs_accel_y_mps2": 1.0
@@ -197,127 +200,127 @@
   "selected_guidance_extension_results": {
     "straight": {
       "intercepted": true,
-      "intercept_time_s": 134.4,
-      "minimum_distance_m": 1.9970563387212914,
+      "intercept_time_s": 129.5,
+      "minimum_distance_m": 1.9725125472252163,
       "max_speed_mps": 20.0,
       "max_abs_accel_x_mps2": 2.5,
       "max_abs_accel_y_mps2": 1.0,
-      "peak_los_rate_radps": 0.004641118189780549
+      "peak_los_rate_radps": 0.006089841483919902
     },
     "weave": {
       "intercepted": true,
-      "intercept_time_s": 133.4,
-      "minimum_distance_m": 1.6690136928064696,
+      "intercept_time_s": 131.70000000000002,
+      "minimum_distance_m": 1.8912840639344193,
       "max_speed_mps": 20.000000000000004,
       "max_abs_accel_x_mps2": 2.5,
       "max_abs_accel_y_mps2": 1.0,
-      "peak_los_rate_radps": 3.6578581796545095
+      "peak_los_rate_radps": 0.43201533774136514
     },
     "bounded_turn": {
       "intercepted": true,
-      "intercept_time_s": 133.3,
-      "minimum_distance_m": 1.984458024080998,
-      "max_speed_mps": 20.0,
+      "intercept_time_s": 145.4,
+      "minimum_distance_m": 1.6061727922644515,
+      "max_speed_mps": 20.000000000000004,
       "max_abs_accel_x_mps2": 2.5,
       "max_abs_accel_y_mps2": 1.0,
-      "peak_los_rate_radps": 1.6192220203855299
+      "peak_los_rate_radps": 1.9182657755711425
     },
     "reactive": {
       "intercepted": true,
-      "intercept_time_s": 154.70000000000002,
-      "minimum_distance_m": 1.6381361221408717,
+      "intercept_time_s": 165.10000000000002,
+      "minimum_distance_m": 1.6982312094769856,
       "max_speed_mps": 20.0,
       "max_abs_accel_x_mps2": 2.5,
       "max_abs_accel_y_mps2": 1.0,
-      "peak_los_rate_radps": 1.8966407035459472
+      "peak_los_rate_radps": 2.253649219394614
     }
   },
   "evasive_scenario_guidance_results": {
     "weave": {
       "predictive": {
         "intercepted": true,
-        "intercept_time_s": 133.4,
-        "minimum_distance_m": 1.6690136928064696,
+        "intercept_time_s": 131.70000000000002,
+        "minimum_distance_m": 1.8912840639344193,
         "max_speed_mps": 20.000000000000004,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 3.6578581796545095
+        "peak_los_rate_radps": 0.43201533774136514
       },
       "pure": {
         "intercepted": true,
-        "intercept_time_s": 129.35,
-        "minimum_distance_m": 1.9765389702588827,
+        "intercept_time_s": 135.45000000000002,
+        "minimum_distance_m": 1.864290607573479,
         "max_speed_mps": 20.0,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 2.8295492459737965
+        "peak_los_rate_radps": 1.4144407976943734
       },
       "pn": {
         "intercepted": true,
-        "intercept_time_s": 133.55,
-        "minimum_distance_m": 1.612786286753355,
+        "intercept_time_s": 148.1,
+        "minimum_distance_m": 1.5660580822882184,
         "max_speed_mps": 20.000000000000004,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 5.485240681496077
+        "peak_los_rate_radps": 4.991914534567635
       }
     },
     "bounded_turn": {
       "predictive": {
         "intercepted": true,
-        "intercept_time_s": 133.3,
-        "minimum_distance_m": 1.984458024080998,
-        "max_speed_mps": 20.0,
+        "intercept_time_s": 145.4,
+        "minimum_distance_m": 1.6061727922644515,
+        "max_speed_mps": 20.000000000000004,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 1.6192220203855299
+        "peak_los_rate_radps": 1.9182657755711425
       },
       "pure": {
         "intercepted": true,
-        "intercept_time_s": 149.4,
-        "minimum_distance_m": 1.680704432432922,
+        "intercept_time_s": 136.05,
+        "minimum_distance_m": 1.8152843623807053,
         "max_speed_mps": 20.0,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 2.4241866756391937
+        "peak_los_rate_radps": 3.0843925757755697
       },
       "pn": {
         "intercepted": true,
-        "intercept_time_s": 143.9,
-        "minimum_distance_m": 1.5049419234708186,
+        "intercept_time_s": 145.25,
+        "minimum_distance_m": 1.7736696644530094,
         "max_speed_mps": 20.0,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 0.445428523673936
+        "peak_los_rate_radps": 1.5431905547464393
       }
     },
     "reactive": {
       "predictive": {
         "intercepted": true,
-        "intercept_time_s": 154.70000000000002,
-        "minimum_distance_m": 1.6381361221408717,
+        "intercept_time_s": 165.10000000000002,
+        "minimum_distance_m": 1.6982312094769856,
         "max_speed_mps": 20.0,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 1.8966407035459472
+        "peak_los_rate_radps": 2.253649219394614
       },
       "pure": {
         "intercepted": false,
         "intercept_time_s": null,
-        "minimum_distance_m": 11.90628960160429,
-        "max_speed_mps": 20.000000000000004,
+        "minimum_distance_m": 3.5773909445169503,
+        "max_speed_mps": 20.0,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 1.071648483631761
+        "peak_los_rate_radps": 4.001324629697886
       },
       "pn": {
         "intercepted": false,
         "intercept_time_s": null,
-        "minimum_distance_m": 2.2705019507393884,
+        "minimum_distance_m": 6.558630590581968,
         "max_speed_mps": 20.0,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 7.628059235500063
+        "peak_los_rate_radps": 2.896482678668832
       }
     }
   },
@@ -325,7 +328,7 @@
     {
       "target_mode": "straight",
       "guidance_mode": "predictive",
-      "bundle_dir": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/predictive",
+      "bundle_dir": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\predictive",
       "scenario": {
         "target_initial_position_m": [
           800.0,
@@ -343,33 +346,33 @@
           0.0
         ],
         "target_speed_mps": 13.0,
-        "target_heading_rad": null,
-        "target_vertical_speed_mps": null,
+        "target_heading_rad": 0.6108652381980153,
+        "target_vertical_speed_mps": 4.44446248192588,
         "intercept_radius_m": 2.0,
         "dt_s": 0.05,
         "horizon_s": 180.0
       },
       "metrics": {
         "intercepted": true,
-        "intercept_time_s": 134.4,
-        "minimum_distance_m": 1.9970563387212914,
+        "intercept_time_s": 129.5,
+        "minimum_distance_m": 1.9725125472252163,
         "max_speed_mps": 20.0,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 0.004641118189780549
+        "peak_los_rate_radps": 0.006089841483919902
       },
       "artifact_paths": [
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/predictive/trajectory.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/predictive/constraints.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/predictive/engagement.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/predictive/animation.gif"
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\predictive\\trajectory.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\predictive\\constraints.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\predictive\\engagement.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\predictive\\animation.gif"
       ],
-      "summary_path": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/predictive/summary.json"
+      "summary_path": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\predictive\\summary.json"
     },
     {
       "target_mode": "straight",
       "guidance_mode": "pure",
-      "bundle_dir": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pure",
+      "bundle_dir": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pure",
       "scenario": {
         "target_initial_position_m": [
           800.0,
@@ -387,33 +390,33 @@
           0.0
         ],
         "target_speed_mps": 13.0,
-        "target_heading_rad": null,
-        "target_vertical_speed_mps": null,
+        "target_heading_rad": 0.6108652381980153,
+        "target_vertical_speed_mps": 4.44446248192588,
         "intercept_radius_m": 2.0,
         "dt_s": 0.05,
         "horizon_s": 180.0
       },
       "metrics": {
         "intercepted": true,
-        "intercept_time_s": 134.5,
-        "minimum_distance_m": 1.6630778190283209,
-        "max_speed_mps": 19.99999999993316,
+        "intercept_time_s": 131.25,
+        "minimum_distance_m": 1.8037239100518192,
+        "max_speed_mps": 19.999999980923704,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 0.004603613766306847
+        "peak_los_rate_radps": 0.006017580204753151
       },
       "artifact_paths": [
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pure/trajectory.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pure/constraints.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pure/engagement.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pure/animation.gif"
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pure\\trajectory.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pure\\constraints.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pure\\engagement.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pure\\animation.gif"
       ],
-      "summary_path": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pure/summary.json"
+      "summary_path": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pure\\summary.json"
     },
     {
       "target_mode": "straight",
       "guidance_mode": "pn",
-      "bundle_dir": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pn",
+      "bundle_dir": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pn",
       "scenario": {
         "target_initial_position_m": [
           800.0,
@@ -431,33 +434,33 @@
           0.0
         ],
         "target_speed_mps": 13.0,
-        "target_heading_rad": null,
-        "target_vertical_speed_mps": null,
+        "target_heading_rad": 0.6108652381980153,
+        "target_vertical_speed_mps": 4.44446248192588,
         "intercept_radius_m": 2.0,
         "dt_s": 0.05,
         "horizon_s": 180.0
       },
       "metrics": {
         "intercepted": true,
-        "intercept_time_s": 134.45000000000002,
-        "minimum_distance_m": 1.6560666515885696,
+        "intercept_time_s": 129.55,
+        "minimum_distance_m": 1.640169026078118,
         "max_speed_mps": 20.0,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 0.004641118189780549
+        "peak_los_rate_radps": 0.006089841483919902
       },
       "artifact_paths": [
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pn/trajectory.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pn/constraints.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pn/engagement.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pn/animation.gif"
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pn\\trajectory.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pn\\constraints.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pn\\engagement.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pn\\animation.gif"
       ],
-      "summary_path": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pn/summary.json"
+      "summary_path": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pn\\summary.json"
     },
     {
       "target_mode": "weave",
       "guidance_mode": "predictive",
-      "bundle_dir": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/predictive",
+      "bundle_dir": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\predictive",
       "scenario": {
         "target_initial_position_m": [
           800.0,
@@ -475,33 +478,33 @@
           0.0
         ],
         "target_speed_mps": 13.0,
-        "target_heading_rad": null,
-        "target_vertical_speed_mps": null,
+        "target_heading_rad": 0.6108652381980153,
+        "target_vertical_speed_mps": 4.44446248192588,
         "intercept_radius_m": 2.0,
         "dt_s": 0.05,
         "horizon_s": 180.0
       },
       "metrics": {
         "intercepted": true,
-        "intercept_time_s": 133.4,
-        "minimum_distance_m": 1.6690136928064696,
+        "intercept_time_s": 131.70000000000002,
+        "minimum_distance_m": 1.8912840639344193,
         "max_speed_mps": 20.000000000000004,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 3.6578581796545095
+        "peak_los_rate_radps": 0.43201533774136514
       },
       "artifact_paths": [
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/predictive/trajectory.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/predictive/constraints.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/predictive/engagement.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/predictive/animation.gif"
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\predictive\\trajectory.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\predictive\\constraints.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\predictive\\engagement.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\predictive\\animation.gif"
       ],
-      "summary_path": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/predictive/summary.json"
+      "summary_path": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\predictive\\summary.json"
     },
     {
       "target_mode": "weave",
       "guidance_mode": "pure",
-      "bundle_dir": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pure",
+      "bundle_dir": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pure",
       "scenario": {
         "target_initial_position_m": [
           800.0,
@@ -519,33 +522,33 @@
           0.0
         ],
         "target_speed_mps": 13.0,
-        "target_heading_rad": null,
-        "target_vertical_speed_mps": null,
+        "target_heading_rad": 0.6108652381980153,
+        "target_vertical_speed_mps": 4.44446248192588,
         "intercept_radius_m": 2.0,
         "dt_s": 0.05,
         "horizon_s": 180.0
       },
       "metrics": {
         "intercepted": true,
-        "intercept_time_s": 129.35,
-        "minimum_distance_m": 1.9765389702588827,
+        "intercept_time_s": 135.45000000000002,
+        "minimum_distance_m": 1.864290607573479,
         "max_speed_mps": 20.0,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 2.8295492459737965
+        "peak_los_rate_radps": 1.4144407976943734
       },
       "artifact_paths": [
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pure/trajectory.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pure/constraints.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pure/engagement.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pure/animation.gif"
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pure\\trajectory.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pure\\constraints.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pure\\engagement.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pure\\animation.gif"
       ],
-      "summary_path": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pure/summary.json"
+      "summary_path": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pure\\summary.json"
     },
     {
       "target_mode": "weave",
       "guidance_mode": "pn",
-      "bundle_dir": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pn",
+      "bundle_dir": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pn",
       "scenario": {
         "target_initial_position_m": [
           800.0,
@@ -563,33 +566,33 @@
           0.0
         ],
         "target_speed_mps": 13.0,
-        "target_heading_rad": null,
-        "target_vertical_speed_mps": null,
+        "target_heading_rad": 0.6108652381980153,
+        "target_vertical_speed_mps": 4.44446248192588,
         "intercept_radius_m": 2.0,
         "dt_s": 0.05,
         "horizon_s": 180.0
       },
       "metrics": {
         "intercepted": true,
-        "intercept_time_s": 133.55,
-        "minimum_distance_m": 1.612786286753355,
+        "intercept_time_s": 148.1,
+        "minimum_distance_m": 1.5660580822882184,
         "max_speed_mps": 20.000000000000004,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 5.485240681496077
+        "peak_los_rate_radps": 4.991914534567635
       },
       "artifact_paths": [
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pn/trajectory.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pn/constraints.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pn/engagement.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pn/animation.gif"
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pn\\trajectory.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pn\\constraints.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pn\\engagement.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pn\\animation.gif"
       ],
-      "summary_path": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pn/summary.json"
+      "summary_path": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pn\\summary.json"
     },
     {
       "target_mode": "bounded_turn",
       "guidance_mode": "predictive",
-      "bundle_dir": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/predictive",
+      "bundle_dir": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\predictive",
       "scenario": {
         "target_initial_position_m": [
           800.0,
@@ -607,33 +610,33 @@
           0.0
         ],
         "target_speed_mps": 13.0,
-        "target_heading_rad": null,
-        "target_vertical_speed_mps": null,
+        "target_heading_rad": 0.6108652381980153,
+        "target_vertical_speed_mps": 4.44446248192588,
         "intercept_radius_m": 2.0,
         "dt_s": 0.05,
         "horizon_s": 180.0
       },
       "metrics": {
         "intercepted": true,
-        "intercept_time_s": 133.3,
-        "minimum_distance_m": 1.984458024080998,
-        "max_speed_mps": 20.0,
+        "intercept_time_s": 145.4,
+        "minimum_distance_m": 1.6061727922644515,
+        "max_speed_mps": 20.000000000000004,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 1.6192220203855299
+        "peak_los_rate_radps": 1.9182657755711425
       },
       "artifact_paths": [
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/predictive/trajectory.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/predictive/constraints.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/predictive/engagement.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/predictive/animation.gif"
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\predictive\\trajectory.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\predictive\\constraints.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\predictive\\engagement.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\predictive\\animation.gif"
       ],
-      "summary_path": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/predictive/summary.json"
+      "summary_path": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\predictive\\summary.json"
     },
     {
       "target_mode": "bounded_turn",
       "guidance_mode": "pure",
-      "bundle_dir": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pure",
+      "bundle_dir": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pure",
       "scenario": {
         "target_initial_position_m": [
           800.0,
@@ -651,33 +654,33 @@
           0.0
         ],
         "target_speed_mps": 13.0,
-        "target_heading_rad": null,
-        "target_vertical_speed_mps": null,
+        "target_heading_rad": 0.6108652381980153,
+        "target_vertical_speed_mps": 4.44446248192588,
         "intercept_radius_m": 2.0,
         "dt_s": 0.05,
         "horizon_s": 180.0
       },
       "metrics": {
         "intercepted": true,
-        "intercept_time_s": 149.4,
-        "minimum_distance_m": 1.680704432432922,
+        "intercept_time_s": 136.05,
+        "minimum_distance_m": 1.8152843623807053,
         "max_speed_mps": 20.0,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 2.4241866756391937
+        "peak_los_rate_radps": 3.0843925757755697
       },
       "artifact_paths": [
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pure/trajectory.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pure/constraints.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pure/engagement.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pure/animation.gif"
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pure\\trajectory.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pure\\constraints.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pure\\engagement.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pure\\animation.gif"
       ],
-      "summary_path": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pure/summary.json"
+      "summary_path": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pure\\summary.json"
     },
     {
       "target_mode": "bounded_turn",
       "guidance_mode": "pn",
-      "bundle_dir": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pn",
+      "bundle_dir": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pn",
       "scenario": {
         "target_initial_position_m": [
           800.0,
@@ -695,33 +698,33 @@
           0.0
         ],
         "target_speed_mps": 13.0,
-        "target_heading_rad": null,
-        "target_vertical_speed_mps": null,
+        "target_heading_rad": 0.6108652381980153,
+        "target_vertical_speed_mps": 4.44446248192588,
         "intercept_radius_m": 2.0,
         "dt_s": 0.05,
         "horizon_s": 180.0
       },
       "metrics": {
         "intercepted": true,
-        "intercept_time_s": 143.9,
-        "minimum_distance_m": 1.5049419234708186,
+        "intercept_time_s": 145.25,
+        "minimum_distance_m": 1.7736696644530094,
         "max_speed_mps": 20.0,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 0.445428523673936
+        "peak_los_rate_radps": 1.5431905547464393
       },
       "artifact_paths": [
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pn/trajectory.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pn/constraints.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pn/engagement.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pn/animation.gif"
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pn\\trajectory.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pn\\constraints.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pn\\engagement.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pn\\animation.gif"
       ],
-      "summary_path": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pn/summary.json"
+      "summary_path": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pn\\summary.json"
     },
     {
       "target_mode": "reactive",
       "guidance_mode": "predictive",
-      "bundle_dir": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/predictive",
+      "bundle_dir": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\predictive",
       "scenario": {
         "target_initial_position_m": [
           800.0,
@@ -739,33 +742,33 @@
           0.0
         ],
         "target_speed_mps": 13.0,
-        "target_heading_rad": null,
-        "target_vertical_speed_mps": null,
+        "target_heading_rad": 0.6108652381980153,
+        "target_vertical_speed_mps": 4.44446248192588,
         "intercept_radius_m": 2.0,
         "dt_s": 0.05,
         "horizon_s": 180.0
       },
       "metrics": {
         "intercepted": true,
-        "intercept_time_s": 154.70000000000002,
-        "minimum_distance_m": 1.6381361221408717,
+        "intercept_time_s": 165.10000000000002,
+        "minimum_distance_m": 1.6982312094769856,
         "max_speed_mps": 20.0,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 1.8966407035459472
+        "peak_los_rate_radps": 2.253649219394614
       },
       "artifact_paths": [
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/predictive/trajectory.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/predictive/constraints.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/predictive/engagement.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/predictive/animation.gif"
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\predictive\\trajectory.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\predictive\\constraints.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\predictive\\engagement.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\predictive\\animation.gif"
       ],
-      "summary_path": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/predictive/summary.json"
+      "summary_path": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\predictive\\summary.json"
     },
     {
       "target_mode": "reactive",
       "guidance_mode": "pure",
-      "bundle_dir": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pure",
+      "bundle_dir": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pure",
       "scenario": {
         "target_initial_position_m": [
           800.0,
@@ -783,8 +786,8 @@
           0.0
         ],
         "target_speed_mps": 13.0,
-        "target_heading_rad": null,
-        "target_vertical_speed_mps": null,
+        "target_heading_rad": 0.6108652381980153,
+        "target_vertical_speed_mps": 4.44446248192588,
         "intercept_radius_m": 2.0,
         "dt_s": 0.05,
         "horizon_s": 180.0
@@ -792,24 +795,24 @@
       "metrics": {
         "intercepted": false,
         "intercept_time_s": null,
-        "minimum_distance_m": 11.90628960160429,
-        "max_speed_mps": 20.000000000000004,
+        "minimum_distance_m": 3.5773909445169503,
+        "max_speed_mps": 20.0,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 1.071648483631761
+        "peak_los_rate_radps": 4.001324629697886
       },
       "artifact_paths": [
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pure/trajectory.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pure/constraints.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pure/engagement.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pure/animation.gif"
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pure\\trajectory.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pure\\constraints.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pure\\engagement.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pure\\animation.gif"
       ],
-      "summary_path": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pure/summary.json"
+      "summary_path": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pure\\summary.json"
     },
     {
       "target_mode": "reactive",
       "guidance_mode": "pn",
-      "bundle_dir": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pn",
+      "bundle_dir": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pn",
       "scenario": {
         "target_initial_position_m": [
           800.0,
@@ -827,8 +830,8 @@
           0.0
         ],
         "target_speed_mps": 13.0,
-        "target_heading_rad": null,
-        "target_vertical_speed_mps": null,
+        "target_heading_rad": 0.6108652381980153,
+        "target_vertical_speed_mps": 4.44446248192588,
         "intercept_radius_m": 2.0,
         "dt_s": 0.05,
         "horizon_s": 180.0
@@ -836,93 +839,93 @@
       "metrics": {
         "intercepted": false,
         "intercept_time_s": null,
-        "minimum_distance_m": 2.2705019507393884,
+        "minimum_distance_m": 6.558630590581968,
         "max_speed_mps": 20.0,
         "max_abs_accel_x_mps2": 2.5,
         "max_abs_accel_y_mps2": 1.0,
-        "peak_los_rate_radps": 7.628059235500063
+        "peak_los_rate_radps": 2.896482678668832
       },
       "artifact_paths": [
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pn/trajectory.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pn/constraints.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pn/engagement.png",
-        "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pn/animation.gif"
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pn\\trajectory.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pn\\constraints.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pn\\engagement.png",
+        "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pn\\animation.gif"
       ],
-      "summary_path": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pn/summary.json"
+      "summary_path": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pn\\summary.json"
     }
   ],
-  "overview_matrix_path": "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/q2_overview_matrix.png",
+  "overview_matrix_path": "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\q2_overview_matrix.png",
   "artifact_paths": [
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/q2_nominal_predictive.csv",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/q2_nominal_pure.csv",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/q2_nominal_pn.csv",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/q2_heading_sweep.csv",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/q2_mode_matrix.csv",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/q2_nominal_trajectory.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/q2_constraint_traces.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/q2_los_geometry.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/q2_guidance_comparison.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/q2_guidance_3d_comparison.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/q2_overview_matrix.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/predictive/trajectory.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/predictive/constraints.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/predictive/engagement.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/predictive/animation.gif",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/predictive/summary.json",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pure/trajectory.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pure/constraints.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pure/engagement.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pure/animation.gif",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pure/summary.json",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pn/trajectory.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pn/constraints.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pn/engagement.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pn/animation.gif",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/straight/pn/summary.json",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/predictive/trajectory.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/predictive/constraints.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/predictive/engagement.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/predictive/animation.gif",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/predictive/summary.json",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pure/trajectory.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pure/constraints.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pure/engagement.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pure/animation.gif",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pure/summary.json",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pn/trajectory.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pn/constraints.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pn/engagement.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pn/animation.gif",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/weave/pn/summary.json",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/predictive/trajectory.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/predictive/constraints.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/predictive/engagement.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/predictive/animation.gif",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/predictive/summary.json",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pure/trajectory.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pure/constraints.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pure/engagement.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pure/animation.gif",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pure/summary.json",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pn/trajectory.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pn/constraints.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pn/engagement.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pn/animation.gif",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/bounded_turn/pn/summary.json",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/predictive/trajectory.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/predictive/constraints.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/predictive/engagement.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/predictive/animation.gif",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/predictive/summary.json",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pure/trajectory.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pure/constraints.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pure/engagement.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pure/animation.gif",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pure/summary.json",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pn/trajectory.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pn/constraints.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pn/engagement.png",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pn/animation.gif",
-    "/mnt/c/Users/yuval/XTEND-GNC/outputs/q2/reactive/pn/summary.json"
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\q2_nominal_predictive.csv",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\q2_nominal_pure.csv",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\q2_nominal_pn.csv",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\q2_heading_sweep.csv",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\q2_mode_matrix.csv",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\q2_nominal_trajectory.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\q2_constraint_traces.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\q2_los_geometry.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\q2_guidance_comparison.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\q2_guidance_3d_comparison.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\q2_overview_matrix.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\predictive\\trajectory.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\predictive\\constraints.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\predictive\\engagement.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\predictive\\animation.gif",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\predictive\\summary.json",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pure\\trajectory.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pure\\constraints.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pure\\engagement.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pure\\animation.gif",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pure\\summary.json",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pn\\trajectory.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pn\\constraints.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pn\\engagement.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pn\\animation.gif",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\straight\\pn\\summary.json",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\predictive\\trajectory.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\predictive\\constraints.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\predictive\\engagement.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\predictive\\animation.gif",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\predictive\\summary.json",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pure\\trajectory.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pure\\constraints.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pure\\engagement.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pure\\animation.gif",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pure\\summary.json",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pn\\trajectory.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pn\\constraints.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pn\\engagement.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pn\\animation.gif",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\weave\\pn\\summary.json",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\predictive\\trajectory.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\predictive\\constraints.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\predictive\\engagement.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\predictive\\animation.gif",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\predictive\\summary.json",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pure\\trajectory.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pure\\constraints.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pure\\engagement.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pure\\animation.gif",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pure\\summary.json",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pn\\trajectory.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pn\\constraints.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pn\\engagement.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pn\\animation.gif",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\bounded_turn\\pn\\summary.json",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\predictive\\trajectory.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\predictive\\constraints.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\predictive\\engagement.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\predictive\\animation.gif",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\predictive\\summary.json",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pure\\trajectory.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pure\\constraints.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pure\\engagement.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pure\\animation.gif",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pure\\summary.json",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pn\\trajectory.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pn\\constraints.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pn\\engagement.png",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pn\\animation.gif",
+    "C:\\Users\\yuval\\XTEND-GNC\\outputs\\q2\\reactive\\pn\\summary.json"
   ]
 }

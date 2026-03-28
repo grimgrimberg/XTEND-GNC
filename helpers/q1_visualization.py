@@ -120,7 +120,7 @@ def plot_convention_diagnostics(output_path: Path, selection: FrameConventionSel
     labels = [
         "\n".join(
             [
-                "B->W" if row["quaternion_is_body_to_world"] else "W->B",
+                "quat B->W" if row["quaternion_is_body_to_world"] else "quat W->B",
                 "az->R" if row["camera_positive_azimuth_right"] else "az->L",
                 "el->U" if row["camera_positive_elevation_up"] else "el->D",
                 "g->U" if row["gimbal_positive_pitch_raises"] else "g->D",

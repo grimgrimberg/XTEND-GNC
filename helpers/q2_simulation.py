@@ -13,6 +13,8 @@ from .q2_guidance import GuidanceConfig, analytic_lead_intercept_time, build_gui
 from .q2_targets import TargetBehaviorConfig, target_velocity_for_behavior
 from .utils import to_builtin
 
+BASELINE_Q2_HORIZONTAL_HEADING_DEG = 35.0
+
 
 @dataclass(frozen=True)
 class InterceptorConstraints:
@@ -70,6 +72,25 @@ def make_nominal_target_velocity(initial_position: np.ndarray, speed: float) -> 
     if norm == 0.0:
         raise ValueError("Initial position must be non-zero.")
     return speed * initial_position / norm
+
+
+def make_heading_based_target_velocity(
+    *,
+    speed: float,
+    horizontal_heading_rad: float,
+    vertical_speed_mps: float,
+) -> np.ndarray:
+    """Build a constant-speed 3D velocity from a horizontal heading and fixed climb rate."""
+
+    horizontal_speed = float(np.sqrt(max(speed ** 2 - vertical_speed_mps ** 2, 0.0)))
+    return np.array(
+        [
+            horizontal_speed * np.cos(horizontal_heading_rad),
+            horizontal_speed * np.sin(horizontal_heading_rad),
+            vertical_speed_mps,
+        ],
+        dtype=float,
+    )
 
 
 def apply_constraints(
@@ -307,14 +328,26 @@ def run_q2_analysis(
     configure_matplotlib(plot_config)
     plot_config = plot_config or PlotConfig()
     target_initial_position = np.array([800.0, 200.0, 300.0], dtype=float)
-    nominal_velocity = make_nominal_target_velocity(target_initial_position, speed=13.0)
+    baseline_vertical_speed_mps = float(make_nominal_target_velocity(target_initial_position, speed=13.0)[2])
+    baseline_heading_rad = float(np.deg2rad(BASELINE_Q2_HORIZONTAL_HEADING_DEG))
+    # Keep the original climb component, but rotate the horizontal heading slightly
+    # away from the radial tail-chase so the baseline geometry is still conservative
+    # and materially easier to read in the reviewer-facing plots.
+    nominal_velocity = make_heading_based_target_velocity(
+        speed=13.0,
+        horizontal_heading_rad=baseline_heading_rad,
+        vertical_speed_mps=baseline_vertical_speed_mps,
+    )
     constraints = InterceptorConstraints(max_speed=20.0, max_accel_x=2.5, max_accel_y=1.0)
     base_config = SimulationConfig(
         target_initial_position=target_initial_position,
-        target_velocity=nominal_velocity,
+        target_velocity=None,
         interceptor_initial_position=np.zeros(3, dtype=float),
         interceptor_initial_velocity=np.zeros(3, dtype=float),
         constraints=constraints,
+        target_speed_mps=13.0,
+        target_heading_rad=baseline_heading_rad,
+        target_vertical_speed_mps=baseline_vertical_speed_mps,
         target_behavior=TargetBehaviorConfig(mode=target_mode, seed=7),
         guidance=GuidanceConfig(mode=guidance_mode, response_time_s=0.8, navigation_constant=3.5),
         horizon_s=horizon_s,
@@ -385,9 +418,20 @@ def run_q2_analysis(
         "scenario": {
             "target_initial_position_m": target_initial_position,
             "target_velocity_mps": nominal_velocity,
+            "target_heading_deg": float(BASELINE_Q2_HORIZONTAL_HEADING_DEG),
+            "target_vertical_speed_mps": baseline_vertical_speed_mps,
             "interceptor_initial_position_m": base_config.interceptor_initial_position,
             "intercept_radius_m": intercept_radius_m,
-            "heading_assumption": "Baseline target heading follows the initial line-of-sight direction unless overridden in sweeps.",
+            "heading_assumption": (
+                "Baseline target heading is fixed at 35 deg in the horizontal plane. "
+                "The prompt leaves heading unspecified; 35 deg is a small shift away "
+                "from the radial tail-chase so the baseline 3D geometry stays readable."
+            ),
+            "target_vertical_speed_assumption": (
+                "The baseline preserves the climb component implied by the original "
+                "radial-away default, so the only intentional geometry change is the "
+                "horizontal heading."
+            ),
             "z_acceleration_assumption": "No Z-axis acceleration limit was provided, so only X/Y limits are enforced numerically by default.",
         },
         "constraints": asdict(constraints),

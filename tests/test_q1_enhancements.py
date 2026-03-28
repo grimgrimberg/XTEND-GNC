@@ -6,6 +6,7 @@ from helpers.q1_pipeline import (
     FrameConvention,
     estimate_angle_rate,
     estimate_local_ray_bundle_points,
+    select_rate_method,
     select_best_frame_convention,
     split_guidance_streams,
 )
@@ -105,3 +106,32 @@ def test_select_best_frame_convention_matches_real_dataset_default():
     assert {"pair_miss_median_m", "combined_rate_std_deg_s", "camera_positive_azimuth_right"}.issubset(
         selection.candidate_table.columns
     )
+
+
+def test_select_rate_method_reports_noise_latency_rationale():
+    metrics = pd.DataFrame(
+        [
+            {
+                "channel": channel,
+                "method": method,
+                "noise_proxy_deg_per_s": noise,
+                "edge_proxy_deg_per_s": edge,
+                "lag_proxy_seconds": lag,
+                "reconstruction_rmse_deg": rmse,
+                "holdout_rmse_deg": holdout,
+            }
+            for channel in ("azimuth", "elevation")
+            for method, noise, edge, lag, rmse, holdout in (
+                ("gradient", 11.0, 12.0, 0.0, 0.70, 0.12),
+                ("savgol", 2.0, 4.0, 0.010, 0.38, 0.12),
+                ("local_polynomial", 5.8, 6.0, 0.0, 0.25, 0.12),
+                ("spline", 13.0, 14.0, 0.0, 0.26, 0.12),
+            )
+        ]
+    )
+
+    selection = select_rate_method(metrics)
+
+    assert selection["selected_method"] == "local_polynomial"
+    assert "noise" in selection["selected_method_rationale"].lower()
+    assert "latency" in selection["selected_method_rationale"].lower()

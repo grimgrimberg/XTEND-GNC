@@ -16,7 +16,7 @@ from helpers.q1_visualization import (
 from helpers.q2_simulation import InterceptorConstraints, SimulationConfig, SimulationResult
 from helpers.q2_targets import TargetBehaviorConfig
 from helpers.q2_guidance import GuidanceConfig
-from helpers.q2_visualization import plot_bundle_engagement, plot_overview_matrix
+from helpers.q2_visualization import plot_bundle_engagement, plot_constraint_traces, plot_overview_matrix
 
 
 def _capture_figure(monkeypatch, module):
@@ -110,6 +110,21 @@ def test_q2_annotation_plots_have_legends_and_axis_labels(monkeypatch, tmp_path)
     assert all(axis.get_ylabel() for axis in heatmap_axes)
     plt.close(figure)
 
+    scenario_grid_with_miss = pd.DataFrame(
+        [
+            {"target_mode": "straight", "guidance_mode": "predictive", "intercept_time_s": 10.0, "minimum_distance_m": 1.0},
+            {"target_mode": "straight", "guidance_mode": "pure", "intercept_time_s": 12.0, "minimum_distance_m": 1.5},
+            {"target_mode": "reactive", "guidance_mode": "predictive", "intercept_time_s": np.nan, "minimum_distance_m": 4.5},
+            {"target_mode": "reactive", "guidance_mode": "pure", "intercept_time_s": 18.0, "minimum_distance_m": 1.8},
+        ]
+    )
+    plot_overview_matrix(tmp_path / "overview_miss.png", scenario_grid_with_miss, PlotConfig())
+    figure = captured["figure"]
+    text_strings = {text.get_text() for axis in figure.axes for text in axis.texts}
+    assert "MISS" in text_strings
+    assert "nan" not in {value.lower() for value in text_strings}
+    plt.close(figure)
+
     config = SimulationConfig(
         target_initial_position=np.array([100.0, 20.0, 30.0]),
         target_velocity=np.array([6.0, 0.0, 1.5]),
@@ -141,6 +156,14 @@ def test_q2_annotation_plots_have_legends_and_axis_labels(monkeypatch, tmp_path)
         intercepted=False,
         intercept_time_s=None,
     )
+
+    plot_constraint_traces(tmp_path / "constraints.png", config, result, PlotConfig())
+    figure = captured["figure"]
+    ylabels = {axis.get_ylabel() for axis in figure.axes if axis.get_ylabel()}
+    assert "Speed / Rate" not in ylabels
+    assert "Closing Speed [m/s]" in ylabels
+    assert "LOS Rate [rad/s]" in ylabels
+    plt.close(figure)
 
     plot_bundle_engagement(tmp_path / "engagement.png", config, result, PlotConfig())
     figure = captured["figure"]
