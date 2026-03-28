@@ -81,6 +81,16 @@ class FrameConventionSelection:
     candidate_table: pd.DataFrame
 
 
+@dataclass(frozen=True)
+class KalmanCVResult:
+    """Diagnostics for the 1D constant-velocity Kalman rate estimator."""
+
+    filtered_angle_deg: np.ndarray
+    estimated_rate_deg_s: np.ndarray
+    sigma_z_deg: float
+    sigma_a_deg_s2: float
+
+
 def split_guidance_streams(dataframe: pd.DataFrame) -> GuidanceStreams:
     """Split the sparse CSV into camera, gimbal, navigation, and empty-row streams."""
 
@@ -171,6 +181,8 @@ def estimate_angle_rate(
     angle_work = np.rad2deg(np.unwrap(np.deg2rad(angle_deg))) if unwrap else angle_deg.copy()
     if len(time_s) < 5:
         return np.gradient(angle_work, time_s)
+    if method == "kalman_cv":
+        return kalman_cv(time_s, angle_deg, unwrap=unwrap).estimated_rate_deg_s
     if method == "gradient":
         return np.gradient(angle_work, time_s)
     if method == "savgol":
@@ -180,6 +192,90 @@ def estimate_angle_rate(
     if method == "local_polynomial":
         return _estimate_local_polynomial_rate(time_s, angle_work)
     raise ValueError(f"Unsupported method: {method}")
+
+
+def kalman_cv(
+    time_s: np.ndarray,
+    angle_deg: np.ndarray,
+    *,
+    unwrap: bool = False,
+    sigma_z_deg: float | None = None,
+    sigma_a_deg_s2: float | None = None,
+) -> KalmanCVResult:
+    """Causal 1D constant-velocity Kalman filter for angle/rate estimation."""
+
+    time_s = np.asarray(time_s, dtype=float)
+    angle_deg = np.asarray(angle_deg, dtype=float)
+    if len(time_s) != len(angle_deg):
+        raise ValueError("time_s and angle_deg must have the same length.")
+    if len(time_s) == 0:
+        empty = np.asarray([], dtype=float)
+        return KalmanCVResult(empty, empty, float(sigma_z_deg or 1.0), float(sigma_a_deg_s2 or 1.0))
+
+    angle_work = np.rad2deg(np.unwrap(np.deg2rad(angle_deg))) if unwrap else angle_deg.copy()
+    if len(time_s) < 3:
+        if len(time_s) == 1:
+            rate_deg_s = np.zeros_like(angle_work)
+        else:
+            rate_deg_s = np.gradient(angle_work, time_s)
+        sigma_z_deg = float(sigma_z_deg) if sigma_z_deg is not None else 1.0
+        sigma_a_deg_s2 = float(sigma_a_deg_s2) if sigma_a_deg_s2 is not None else 1.0
+        return KalmanCVResult(angle_work.copy(), np.asarray(rate_deg_s, dtype=float), sigma_z_deg, sigma_a_deg_s2)
+
+    time_step = np.diff(time_s)
+    positive_steps = time_step[time_step > 0.0]
+    median_dt = float(np.median(positive_steps)) if len(positive_steps) else 1.0
+    sigma_z_current, sigma_a_current = _kalman_cv_noise_scales(
+        time_s,
+        angle_work,
+        sigma_z_deg=sigma_z_deg,
+        sigma_a_deg_s2=sigma_a_deg_s2,
+    )
+
+    state = np.array([angle_work[0], 0.0], dtype=float)
+    covariance = np.diag(
+        [
+            max((3.0 * sigma_z_current) ** 2, 1.0),
+            max((3.0 * sigma_z_current / max(median_dt, 1e-3)) ** 2, 25.0),
+        ]
+    ).astype(float)
+
+    filtered_angle_deg = np.empty_like(angle_work, dtype=float)
+    estimated_rate_deg_s = np.empty_like(angle_work, dtype=float)
+    filtered_angle_deg[0] = state[0]
+    estimated_rate_deg_s[0] = state[1]
+
+    identity = np.eye(2)
+    observation = np.array([[1.0, 0.0]], dtype=float)
+    for index in range(1, len(time_s)):
+        dt = float(time_s[index] - time_s[index - 1])
+        if not np.isfinite(dt) or dt <= 0.0:
+            dt = median_dt
+        measurement_variance = sigma_z_current**2
+        dt2 = dt * dt
+        transition = np.array([[1.0, dt], [0.0, 1.0]], dtype=float)
+        process_variance = sigma_a_current**2
+        process_noise = process_variance * np.array(
+            [[dt2 * dt2 / 4.0, dt2 * dt / 2.0], [dt2 * dt / 2.0, dt2]],
+            dtype=float,
+        )
+
+        state = transition @ state
+        covariance = transition @ covariance @ transition.T + process_noise
+
+        innovation = float(angle_work[index] - (observation @ state).item())
+        innovation_variance = float((observation @ covariance @ observation.T).item()) + measurement_variance
+        if innovation_variance <= 0.0 or not np.isfinite(innovation_variance):
+            innovation_variance = measurement_variance if measurement_variance > 0.0 else 1.0
+        kalman_gain = (covariance @ observation.T)[:, 0] / innovation_variance
+        state = state + kalman_gain * innovation
+        covariance = (identity - kalman_gain[:, None] @ observation) @ covariance
+        covariance = 0.5 * (covariance + covariance.T)
+
+        filtered_angle_deg[index] = state[0]
+        estimated_rate_deg_s[index] = state[1]
+
+    return KalmanCVResult(filtered_angle_deg, estimated_rate_deg_s, sigma_z_current, sigma_a_current)
 
 
 def estimate_local_ray_bundle_points(
@@ -843,6 +939,36 @@ def _estimate_local_polynomial_rate(time_s: np.ndarray, angle_deg: np.ndarray) -
         coefficients, *_ = np.linalg.lstsq(vandermonde * weights[:, None], local_signal * weights, rcond=None)
         derivative[index] = coefficients[1]
     return derivative
+
+
+def _kalman_cv_noise_scales(
+    time_s: np.ndarray,
+    angle_deg: np.ndarray,
+    *,
+    sigma_z_deg: float | None,
+    sigma_a_deg_s2: float | None,
+) -> tuple[float, float]:
+    prefix_count = min(len(angle_deg), 7)
+    prefix_time = np.asarray(time_s[:prefix_count], dtype=float)
+    prefix_angle = np.asarray(angle_deg[:prefix_count], dtype=float)
+    if sigma_z_deg is None:
+        increments = np.diff(prefix_angle)
+        if len(increments) == 0:
+            sigma_z_deg = 1.0
+        else:
+            increment_center = float(np.median(increments))
+            increment_scale = 1.4826 * float(np.median(np.abs(increments - increment_center)))
+            sigma_z_deg = float(max(0.1, increment_scale / np.sqrt(2.0)))
+    if sigma_a_deg_s2 is None:
+        raw_rate = np.gradient(prefix_angle, prefix_time)
+        rate_change = np.diff(raw_rate)
+        if len(rate_change) == 0:
+            sigma_a_deg_s2 = 1.0
+        else:
+            rate_change_center = float(np.median(rate_change))
+            rate_change_scale = 1.4826 * float(np.median(np.abs(rate_change - rate_change_center)))
+            sigma_a_deg_s2 = float(max(0.1, rate_change_scale))
+    return float(sigma_z_deg), float(sigma_a_deg_s2)
 
 
 def lag_proxy_seconds(signal_a: np.ndarray, signal_b: np.ndarray, time_s: np.ndarray) -> float:

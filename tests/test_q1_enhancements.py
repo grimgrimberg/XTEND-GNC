@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 
 from helpers.paths import data_path
+import helpers.q1_pipeline as q1_pipeline
 from helpers.q1_pipeline import (
     FrameConvention,
     estimate_angle_rate,
@@ -135,3 +136,104 @@ def test_select_rate_method_reports_noise_latency_rationale():
     assert selection["selected_method"] == "local_polynomial"
     assert "noise" in selection["selected_method_rationale"].lower()
     assert "latency" in selection["selected_method_rationale"].lower()
+
+
+def test_kalman_cv_returns_result_and_handles_irregular_dt():
+    kalman_cv = getattr(q1_pipeline, "kalman_cv", None)
+    assert callable(kalman_cv)
+
+    time_s = np.array([0.0, 0.04, 0.11, 0.21, 0.36, 0.58, 0.91], dtype=float)
+    truth_rate_deg_s = 4.25
+    truth_angle_deg = -12.0 + truth_rate_deg_s * time_s
+    measurements_deg = truth_angle_deg + np.array([0.18, -0.22, 0.14, -0.05, 0.09, -0.03, 0.11], dtype=float)
+
+    result = kalman_cv(time_s, measurements_deg)
+
+    assert hasattr(result, "filtered_angle_deg")
+    assert hasattr(result, "estimated_rate_deg_s")
+    assert hasattr(result, "sigma_z_deg")
+    assert hasattr(result, "sigma_a_deg_s2")
+    assert result.filtered_angle_deg.shape == measurements_deg.shape
+    assert result.estimated_rate_deg_s.shape == measurements_deg.shape
+    assert np.all(np.isfinite(result.filtered_angle_deg))
+    assert np.all(np.isfinite(result.estimated_rate_deg_s))
+    assert result.sigma_z_deg > 0.0
+    assert result.sigma_a_deg_s2 > 0.0
+    # The approved design starts with zero initial rate, so score after the
+    # brief startup transient rather than demanding oracle knowledge at t0.
+    assert float(np.sqrt(np.mean((result.estimated_rate_deg_s[2:] - truth_rate_deg_s) ** 2))) < 0.6
+
+
+def test_kalman_cv_is_causal_for_earlier_samples():
+    kalman_cv = getattr(q1_pipeline, "kalman_cv", None)
+    assert callable(kalman_cv)
+
+    time_s = np.array([0.0, 0.06, 0.17, 0.33, 0.56, 0.84], dtype=float)
+    angle_deg = 7.5 + 2.0 * time_s + np.array([0.0, 0.07, -0.03, 0.05, -0.02, 0.01], dtype=float)
+
+    resolved = kalman_cv(time_s, angle_deg)
+    baseline = kalman_cv(
+        time_s,
+        angle_deg,
+        sigma_z_deg=resolved.sigma_z_deg,
+        sigma_a_deg_s2=resolved.sigma_a_deg_s2,
+    )
+    perturbed = angle_deg.copy()
+    perturbed[-1] += 30.0
+    changed = kalman_cv(
+        time_s,
+        perturbed,
+        sigma_z_deg=resolved.sigma_z_deg,
+        sigma_a_deg_s2=resolved.sigma_a_deg_s2,
+    )
+
+    assert np.allclose(baseline.filtered_angle_deg[:-1], changed.filtered_angle_deg[:-1], atol=1e-12)
+    assert np.allclose(baseline.estimated_rate_deg_s[:-1], changed.estimated_rate_deg_s[:-1], atol=1e-12)
+
+
+def test_estimate_angle_rate_exposes_kalman_cv_and_short_sequence_falls_back():
+    def run_kalman_rate(time_s: np.ndarray, angle_deg: np.ndarray) -> np.ndarray | None:
+        try:
+            return estimate_angle_rate(time_s, angle_deg, method="kalman_cv")
+        except ValueError:
+            return None
+
+    short_time_s = np.array([0.0, 0.4], dtype=float)
+    short_angle_deg = np.array([3.0, 3.8], dtype=float)
+    short_rate = run_kalman_rate(short_time_s, short_angle_deg)
+    assert short_rate is not None
+    assert np.allclose(short_rate, np.array([2.0, 2.0], dtype=float), atol=1e-12)
+
+    time_s = np.array([0.0, 0.05, 0.16, 0.31, 0.53], dtype=float)
+    truth_rate_deg_s = -1.5
+    angle_deg = 8.0 + truth_rate_deg_s * time_s + np.array([0.0, 0.14, -0.11, 0.08, -0.04], dtype=float)
+
+    rate_from_estimator = run_kalman_rate(time_s, angle_deg)
+    kalman_cv = getattr(q1_pipeline, "kalman_cv", None)
+    assert callable(kalman_cv)
+    direct_result = kalman_cv(time_s, angle_deg)
+
+    assert rate_from_estimator is not None
+    assert np.allclose(rate_from_estimator, direct_result.estimated_rate_deg_s, atol=1e-12)
+    assert float(np.sqrt(np.mean((rate_from_estimator[2:] - truth_rate_deg_s) ** 2))) < 0.8
+
+
+def test_kalman_cv_beats_raw_gradient_on_noisy_constant_rate_signal():
+    kalman_cv = getattr(q1_pipeline, "kalman_cv", None)
+    assert callable(kalman_cv)
+
+    rng = np.random.default_rng(12)
+    time_s = np.linspace(0.0, 15.0, 601, dtype=float)
+    truth_rate_deg_s = 7.5
+    truth_angle_deg = -18.0 + truth_rate_deg_s * time_s
+    noisy_angle_deg = truth_angle_deg + rng.normal(scale=0.45, size=time_s.shape)
+
+    kalman_result = kalman_cv(time_s, noisy_angle_deg)
+    kalman_rate = estimate_angle_rate(time_s, noisy_angle_deg, method="kalman_cv")
+    gradient_rate = np.gradient(noisy_angle_deg, time_s)
+
+    kalman_rmse = float(np.sqrt(np.mean((kalman_rate - truth_rate_deg_s) ** 2)))
+    gradient_rmse = float(np.sqrt(np.mean((gradient_rate - truth_rate_deg_s) ** 2)))
+    assert kalman_rmse < 0.55 * gradient_rmse
+    assert kalman_result.sigma_z_deg > 0.0
+    assert kalman_result.sigma_a_deg_s2 > 0.0
