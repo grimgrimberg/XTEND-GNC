@@ -193,9 +193,9 @@ def test_estimate_angle_rate_exposes_kalman_cv_and_short_sequence_falls_back():
     assert short_rate is not None
     assert np.allclose(short_rate, np.array([2.0, 2.0], dtype=float), atol=1e-12)
 
-    time_s = np.array([0.0, 0.05, 0.16, 0.31, 0.53, 0.78], dtype=float)
+    time_s = np.array([0.0, 0.05, 0.16, 0.31, 0.53], dtype=float)
     truth_rate_deg_s = -1.5
-    angle_deg = 8.0 + truth_rate_deg_s * time_s + np.array([0.0, 0.14, -0.11, 0.08, -0.04, 0.06], dtype=float)
+    angle_deg = 8.0 + truth_rate_deg_s * time_s + np.array([0.0, 0.14, -0.11, 0.08, -0.04], dtype=float)
 
     rate_from_estimator = run_kalman_rate(time_s, angle_deg)
     kalman_cv = getattr(q1_pipeline, "kalman_cv", None)
