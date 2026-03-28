@@ -50,6 +50,15 @@ def test_run_q1_analysis_summary_includes_kalman_cv_ranking_and_tuning(tmp_path)
         assert channel_tuning["sigma_z_deg"] > 0.0
         assert channel_tuning["sigma_a_deg_s2"] > 0.0
 
+    dataframe = __import__("pandas").read_csv(tmp_path / "q1_world_angles.csv")
+    assert {
+        "world_az_kalman_deg",
+        "world_az_kalman_unwrapped_deg",
+        "world_el_kalman_deg",
+        "az_rate_kalman_cv_deg_s",
+        "el_rate_kalman_cv_deg_s",
+    }.issubset(dataframe.columns)
+
 
 def test_run_q2_analysis_emits_12_bundle_directories_with_required_static_files(tmp_path):
     summary = run_q2_analysis(

@@ -717,8 +717,9 @@ def run_q1_analysis(
     synchronized["el_rate_local_polynomial_deg_s"] = rate_candidates["local_polynomial"]["elevation"]
     synchronized["az_rate_spline_deg_s"] = rate_candidates["spline"]["azimuth"]
     synchronized["el_rate_spline_deg_s"] = rate_candidates["spline"]["elevation"]
-    synchronized["world_az_kalman_cv_deg"] = kalman_azimuth.filtered_angle_deg
-    synchronized["world_el_kalman_cv_deg"] = kalman_elevation.filtered_angle_deg
+    synchronized["world_az_kalman_unwrapped_deg"] = kalman_azimuth.filtered_angle_deg
+    synchronized["world_az_kalman_deg"] = ((kalman_azimuth.filtered_angle_deg + 180.0) % 360.0) - 180.0
+    synchronized["world_el_kalman_deg"] = kalman_elevation.filtered_angle_deg
     synchronized["az_rate_kalman_cv_deg_s"] = kalman_azimuth.estimated_rate_deg_s
     synchronized["el_rate_kalman_cv_deg_s"] = kalman_elevation.estimated_rate_deg_s
 
